@@ -23,7 +23,9 @@ module.exports = function(grunt) {
                 'src/**/*.js',
                 '!src/server/node_modules/**/*.js',
                 '!src/client/bower_components/**/*.js',
-                '!src/client/node_modules/**/*.js'
+                '!src/client/node_modules/**/*.js',
+                '!src/test/blanket.js'
+
             ],
             options: {
                 jshintrc: '.jshintrc',
