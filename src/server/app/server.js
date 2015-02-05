@@ -38,7 +38,7 @@ function configure_express_middleware(app) {
   app.use(express.limit('16kb'));
   app.use(express.bodyParser());
   app.use(express.methodOverride());
-  app.use('/api', require('app/api/wins/router'));
+  app.use('/api', require('app/api/entry/router'));
   app.use(express.static(C.client_root)); // send web app if it's not an api route
   app.use(function(req, res, next) { // Fall back to always sending index.html
     res.sendfile(path.join(C.client_root, 'app', 'index.html'));
