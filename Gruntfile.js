@@ -142,8 +142,7 @@ module.exports = function(grunt) {
         compress: {
             main: {
                 options: {
-                    archive: 'build/dist/postgres-fiddle-<%= pkg.version %>-<%= mode %>-' +
-                        '<%= grunt.template.today("yyyymmdd-HHMM") %>.tar.gz',
+                    archive: 'build/dist/postgres-fiddle-<%= pkg.version %>-<%= time %>.tar.gz',
                     mode: 'tgz',
                     pretty: true
                 },
