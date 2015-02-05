@@ -1,0 +1,7 @@
+{
+  "script":           "server.js",
+  "name":             "postgres-fiddle",
+  "watch":            true,
+  "exec_mode":        "cluster_mode",
+  "args":             "[]"
+}
