@@ -1,5 +1,10 @@
 {
   "name": "postgres-fiddle",
+  "author": {
+    "name": "Christo Fogelberg",
+    "email": "cfogelberg@gmail.com",
+    "url": "http://qualocustech.wordpress.com"
+  },
   "version": "0.0.0",
   "description": "An impl fiddle that demos postgres in a Node.JS single page webapp",
   "private": true,
