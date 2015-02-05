@@ -1,6 +1,5 @@
 *~
 .~lock*
-bower_components
 .project
 .settings
 build
