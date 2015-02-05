@@ -83,10 +83,9 @@ module.exports = function(grunt) {
             js: {
                 options: {
                     banner: '/*\n' +
-                        ' * <%= pkg.name %> - version <%= pkg.version %>:<%= mode %> - ' +
-                        '<%= grunt.template.today("yyyy-mm-dd") %>\n' +
+                        ' * <%= pkg.name %> - v<%= pkg.version %> - <%= today %>\n' +
                         ' * <%= pkg.description %>\n' +
-                        ' * (C) <%= grunt.template.today("yyyy") %> <%= pkg.author.name %>\n' +
+                        ' * (C) 2015-<%= year %> <%= pkg.author.name %>\n' +
                         ' */\n'
                 },
                 files: {
@@ -97,10 +96,9 @@ module.exports = function(grunt) {
             css: {
                 options: {
                     banner: '/*\n' +
-                        ' * <%= pkg.name %> - version <%= pkg.version %>:<%= mode %> - ' +
-                        '<%= grunt.template.today("yyyy-mm-dd") %>\n' +
+                        ' * <%= pkg.name %> - v<%= pkg.version %> - <%= today %>\n' +
                         ' * <%= pkg.description %>\n' +
-                        ' * (C) <%= grunt.template.today("yyyy") %> <%= pkg.author.name %>\n' +
+                        ' * (C) 2015-<%= year %> <%= pkg.author.name %>\n' +
                         ' */\n'
                 },
                 files: {
@@ -111,10 +109,9 @@ module.exports = function(grunt) {
             html: {
                 options: {
                     banner: '<!--\n' +
-                        ' <%= pkg.name %> - version <%= pkg.version %>:<%= mode %> - ' +
-                        '<%= grunt.template.today("yyyy-mm-dd") %>\n' +
+                        ' <%= pkg.name %> - v<%= pkg.version %> - <%= today %>\n' +
                         ' <%= pkg.description %>\n' +
-                        ' (C) <%= grunt.template.today("yyyy") %> <%= pkg.author.name %>\n' +
+                        ' (C) 2015-<%= year %> <%= pkg.author.name %>\n' +
                         '-->\n'
                 },
                 files: {
@@ -125,10 +122,9 @@ module.exports = function(grunt) {
             sh: {
                 options: {
                     banner: '#!/bin/bash\n' +
-                        '# <%= pkg.name %> - version <%= pkg.version %>:<%= mode %> - ' +
-                        '<%= grunt.template.today("yyyy-mm-dd") %>\n' +
+                        '# <%= pkg.name %> - v<%= pkg.version %> - <%= today %>\n' +
                         '# <%= pkg.description %>\n' +
-                        '# (C) <%= grunt.template.today("yyyy") %> <%= pkg.author.name %>\n'
+                        '# (C) 2015-<%= year %> <%= pkg.author.name %>\n'
                 },
                 files: {
                     src: ['build/out/**/*.sh', 'test/out/**/*.sh']
