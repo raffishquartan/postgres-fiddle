@@ -32,22 +32,21 @@ module.exports = function(grunt) {
             },
         },
 
-//        Stubbed out for now
-//        mochaTest: {
-//            test: {
-//                options: {
-//                    reporter: 'spec',
-//                    clearRequireCache: true,
-//                    require: 'test/blanket'
-//                },
-//                src: [
-//                    'test/**/*.js',
-//                    '!test/blanket.js',
-//                    '!test/out/server/node_modules/**/*.js',
-//                    '!test/out/client/bower_components/**/*.js'
-//                ]
-//            }
-//        },
+        mochaTest: {
+            test: {
+                options: {
+                    reporter: 'spec',
+                    clearRequireCache: true,
+                    require: 'test/blanket'
+                },
+                src: [
+                    './**/*_mtest.js',
+                    '!./test/blanket.js',
+                    '!./test/out/server/node_modules/**/*.js',
+                    '!./test/out/client/bower_components/**/*.js'
+                ]
+            }
+        },
 
         // POTENTIAL ISSUE: Does grunt-contrib-copy/tasks/copy.js use mode or just default it to false?
         copy: {
