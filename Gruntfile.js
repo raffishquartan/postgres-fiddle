@@ -6,6 +6,9 @@ module.exports = function(grunt) {
     grunt.initConfig({
         // Configuration files and variables
         pkg: grunt.file.readJSON('package.json'),
+        time: grunt.template.today("yyyymmdd-HHMM"),
+        today: grunt.template.today('yyyy-mm-dd'),
+        year: grunt.template.today('yyyy'),
 
         // Plugin tasks
         clean: {
