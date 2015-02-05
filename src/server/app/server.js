@@ -40,5 +40,8 @@ function configure_express_middleware(app) {
   app.use(express.methodOverride());
   app.use('/api', require('app/api/wins/router'));
   app.use(express.static(C.client_root)); // send web app if it's not an api route
+  app.use(function(req, res, next) { // Fall back to always sending index.html
+    res.sendfile(path.join(C.client_root, 'app', 'index.html'));
+  });
   app.use(express.errorHandler()); // not appropriate for a prod site, see SES / http://calv.info/node-and-express-tips/ for another approach
-};
+}
