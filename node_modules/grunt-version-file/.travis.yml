@@ -1,0 +1,13 @@
+language: node_js
+node_js:
+- '0.10'
+before_script:
+- npm install -g grunt-cli
+deploy:
+  provider: npm
+  email: cfogelberg@gmail.com
+  api_key:
+    secure: Dmj0KyzIIKQiD8E0hDBTMeKMhf3IEo7i1cU38wNXp25yRJ7eN1ZwPfUpyDYxHNnddTlVqLkza0uy99c7UPvYkMQS0Le7ay0oGXHQVg6UY8M+nSRlJbNriMnZBdkR5iaaQeAsZcVGvWBprsuJZbxTEWfI6Nc51rY8J73Q3RWbXok=
+  on:
+    tags: true
+    repo: cfogelberg/grunt-version-file
