@@ -1,16 +1,20 @@
+'use strict';
+
 var express = require('express');
 var http = require('http');
 var path = require('path');
+var log4js = require('log4js');
 
-C = require('app/config');
+var C = require('app/config');
+var L = require('app/util/logger');
 
-process.on("uncaughtException", function(error) {
+process.on('uncaughtException', function(error) {
   if(L && L.server && L.server.error) {
-    L.server.error("Uncaught exception, exiting. Error details:");
+    L.server.error('Uncaught exception, exiting. Error details:');
     L.server.error(error.stack);
   }
   else {
-    console.error("BACKUP LOG TO CONSOLE IN CASE OF TOTAL SERVER/LOGGER FAILURE:\n" + error.stack);
+    console.error('BACKUP LOG TO CONSOLE IN CASE OF TOTAL SERVER/LOGGER FAILURE:\n' + error.stack);
   }
   process.exit();
 });
@@ -21,7 +25,7 @@ var app = express();
 configure_express_middleware(app);
 var http_server = http.createServer(app);
 http_server.listen(C.http_port, function() {
-  L.server.info("Express HTTP server listening on port %d", C.http_port);
+  L.server.info('Express HTTP server listening on port %d', C.http_port);
 });
 
 
