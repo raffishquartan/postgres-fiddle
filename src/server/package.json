@@ -1,0 +1,21 @@
+{
+  "name": "postgres-fiddle-server",
+  "version": "0.0.0",
+  "description": "Server modules for postgres-fiddle",
+  "private": true,
+  "dependencies": {
+    "express": "3.1.x",
+    "path": "0.4.x",
+    "log4js": "0.6.x",
+    "request": "2.27.x",
+    "underscore": "1.6.x",
+    "jquery": "1.7.x",
+    "moment": "2.4.x",
+    "ua-parser": "0.3.x",
+    "pg": "4.2.x",
+    "sql": "0.45.x"
+  },
+  "engines": {
+    "node": "0.10.x"
+  }
+}
