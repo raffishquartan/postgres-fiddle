@@ -1,0 +1,26 @@
+{
+  "appenders": [{
+    "category": "express",
+    "type": "dateFile",
+    "filename": "logs/postgres-fiddle.node.log",
+    "pattern": "-yyyy-MM-dd",
+    "alwaysIncludePattern": false
+  }, {
+    "category": "express",
+    "type": "console"
+  }, {
+    "category": "server",
+    "type": "dateFile",
+    "filename": "logs/postgres-fiddle.node.log",
+    "pattern": "-yyyy-MM-dd",
+    "alwaysIncludePattern": false
+  }, {
+    "category": "server",
+    "type": "console"
+  }],
+
+  "levels": {
+    "express": "info",
+    "server": "info"
+  }
+}
