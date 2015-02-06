@@ -69,12 +69,12 @@ module.exports = function(grunt) {
         mkdir: {
             build: {
                 options: {
-                    create: ['build/out/server/logs']
+                    create: ['build/out/server/app/logs']
                 }
             },
             test: {
                 options: {
-                    create: ['test/out/server/logs']
+                    create: ['test/out/server/app/logs']
                 }
             }
         },
