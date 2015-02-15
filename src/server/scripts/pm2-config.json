@@ -5,8 +5,9 @@
   "ignore_watch":     ["[\\/\\\\]\\./", "node_modules"],
 
   "log_date_format":  "YYYY-MM-DD HH:mm Z",
-  "err_file":         "./pm2.log",
-  "out_file":         "./pm2.log",
+  "error_file":       "./logs/pm2.log",
+  "out_file":         "./logs/pm2.log",
+  "pid_file":         "./logs/pm2.pid",
 
   "exec_mode":        "cluster_mode",
   "instances":        1,
