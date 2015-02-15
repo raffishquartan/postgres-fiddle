@@ -1,0 +1,14 @@
+{
+  "name": "r.js",
+  "homepage": "https://github.com/jrburke/r.js",
+  "version": "2.1.16",
+  "_release": "2.1.16",
+  "_resolution": {
+    "type": "version",
+    "tag": "2.1.16",
+    "commit": "cfbdc977bf45b666fbb304ce99a0829cb5ec1fe7"
+  },
+  "_source": "git://github.com/jrburke/r.js.git",
+  "_target": "2.1.x",
+  "_originalSource": "r.js"
+}
