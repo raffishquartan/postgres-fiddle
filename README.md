@@ -26,7 +26,7 @@ Uncompress `build/dist/ses-*.tar.gz` to the desired location
 ## Running postgres-fiddle
 
 postgres-fiddle is run using pm2. To start the server, `cd server` and run
-`pm2 start ../scripts/pm2-config.json`.
+`pm2 start scripts/pm2-config.json`.
 
 See the pm2 [documentation](https://github.com/Unitech/pm2#table-of-contents) for other useful
 commands.
