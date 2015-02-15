@@ -166,9 +166,12 @@ module.exports = function(grunt) {
         }
     });
 
-    grunt.registerTask('assemble', ['copy', 'mkdir', 'usebanner', 'version_file']);
+    grunt.registerTask('assemble', ['copy', 'mkdir']);
+    grunt.registerTask('metadata', ['usebanner', 'version_file']);
     grunt.registerTask('test', ['jshint', 'mochaTest']);
-    grunt.registerTask('build', ['clean', 'assemble', 'compress', 'test']);
+
+    grunt.registerTask('build', ['clean', 'assemble', 'metadata', 'compress', 'test']);
+    grunt.registerTask('quick', ['clean', 'assemble', 'test']);
 
     // Running test before compress does not work - why?
     grunt.registerTask('broken_build', ['clean', 'assemble', 'test', 'compress'])
