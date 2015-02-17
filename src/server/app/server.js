@@ -45,9 +45,9 @@ function configure_express_middleware(app) {
   app.use(method_override('X-HTTP-Method-Override')) // Google/GData
   app.use(method_override('X-Method-Override'))      // IBM
   app.use("/api", require('app/api/entry/router'));
-  app.use('/baz', function(req, res, next) { res.send('BLAHBLAH'); });
   app.use('/assets', express.static(path.join(C.client_root, 'assets')));
   app.use('/bower_components', express.static(path.join(C.client_root, 'bower_components')));
+  app.use('/js', express.static(path.join(C.client_root, 'js')));
   app.use(function(req, res, next) { // Fall back to always sending index.html
     res.sendFile(path.join(C.client_root, 'index.html'));
   });
