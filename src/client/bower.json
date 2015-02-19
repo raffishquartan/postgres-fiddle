@@ -3,6 +3,7 @@
   "version": "0.0.0",
   "dependencies": {
       "requirejs": "2.1.x",
+      "requirejs-text": "2.0.x",
       "r.js": "2.1.x",
       "bootstrap": "3.1.x",
       "jquery": "2.1.x",
