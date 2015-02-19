@@ -8,6 +8,6 @@ define(function(require) {
 
     Views.PFCompositeView = Marionette.CompositeView.extend();
 
-    Views.PFLayout = Marionette.Layout.extend();
+    Views.PFLayout = Marionette.LayoutView.extend();
   });
 });
