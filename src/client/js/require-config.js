@@ -20,7 +20,6 @@ require.config({
     backbone: "../bower_components/backbone/backbone",
     bootstrap: "../bower_components/bootstrap/dist/js/bootstrap",
     jquery: "../bower_components/jquery/dist/jquery",
-    require: "../bower_components/requirejs/require",
     marionette: "../bower_components/marionette/lib/backbone.marionette",
     underscore: "../bower_components/underscore/underscore"
   },
