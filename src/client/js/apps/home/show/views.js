@@ -1,5 +1,5 @@
 define(function(require) {
-  var PF = require('js/app-obj');
+  var PF = require('js/app/obj');
 
   PF.module('HomeApp.Show.Views', function(Views, PF, Backbone, Marionette, $, _) {
     require('js/common/views');
