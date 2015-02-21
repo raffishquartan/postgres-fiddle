@@ -1,5 +1,3 @@
-// NO DETAILED LOGGING IN THIS FILE
-
 define(function(require) {
   var Backbone = require('backbone');
   var Marionette = require('marionette');
@@ -9,7 +7,7 @@ define(function(require) {
   PF.config = require('js/app/config');
   PF.logger = require('js/app/logger_builder')(PF.config.logger);
   var logger = PF.logger.get_logger('root/js/app/obj');
-  logger.debug('Logger initialised');
+  logger.debug('require:lambda - entered, PF built, config loaded, logger initialised');
 
   // Set up regions
   PF.addRegions({
@@ -27,5 +25,6 @@ define(function(require) {
     logger.trace('PF.event:initialize:after - exit');
   });
 
+  logger.debug('require:lambda - exit');
   return PF;
 });
