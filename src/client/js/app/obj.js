@@ -17,12 +17,12 @@ define(function(require) {
   });
 
   // Set application to start after initialisation
-  PF.on('initialize:after', function(options) {
-    logger.trace('PF.event:initialize:after - enter');
+  PF.on('start', function(options) {
+    logger.trace('PF.event:start - enter');
     Backbone.history.start({ // assume router already required elsewhere, e.g. in main.js
       pushState: true
     });
-    logger.trace('PF.event:initialize:after - exit');
+    logger.trace('PF.event:start - exit');
   });
 
   logger.debug('require:lambda - exit');
