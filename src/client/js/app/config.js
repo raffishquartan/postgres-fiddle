@@ -3,7 +3,7 @@ define(function(require) {
     logger: {
       root: {
         js: {
-          _conf: {
+          conf: {
             level: "all",
             appenders: ["console"]
           }
