@@ -1,5 +1,5 @@
 define(function(require) {
-  var PF = require('js/app-obj');
+  var PF = require('js/app/obj');
 
   PF.module('HomeApp', function(HomeApp, PF, Backbone, Marionette, $, _) {
     HomeApp.Router = Marionette.AppRouter.extend({
