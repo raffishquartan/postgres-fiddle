@@ -21,10 +21,10 @@ define(function(require) {
     };
 
     PF.on('home:show', function() {
-      logger.trace('PF.event:home:show - enter');
+      logger.trace('PF.event:home:show HomeApp - enter');
       PF.navigate('');
       API.show_home();
-      logger.trace('PF.event:home:show - exit');
+      logger.trace('PF.event:home:show HomeApp - exit');
     });
 
     PF.addInitializer(function(){
