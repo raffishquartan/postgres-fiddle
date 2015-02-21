@@ -5,7 +5,11 @@ define(function(require) {
 
   // Set up app object
   var PF = new Marionette.Application();
-  PF.config = require('js/app-config');
+  PF.config = require('js/app/config');
+  PF.logger = require('js/app/logger_builder')(PF.config.logger);
+
+  var logger = PF.logger.get_logger('root/js/app/index');
+  logger.info('Logger initialised');
 
   // Set up regions
   PF.addRegions({
