@@ -1,3 +1,5 @@
+// NO LOGGING IN THIS FILE
+
 define(function(require) {
   var config = {
     logger: {

@@ -1,3 +1,5 @@
+// NO LOGGING IN THIS FILE
+
 require.config({
   shim: {
     bootstrap: {

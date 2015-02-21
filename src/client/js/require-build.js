@@ -1,3 +1,5 @@
+// NO LOGGING IN THIS FILE
+
 ({
     baseUrl: '.',
     name: 'main',
