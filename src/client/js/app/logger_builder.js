@@ -20,7 +20,7 @@ define(function(require) {
     this.warn = this.log;
     this.error = console.error ? console.error.bind(console) : this.warn;
     this.fatal = console.fatal ? console.fatal.bind(console) : this.error;
-  }
+  };
 
   /**
    * A logger object, associated with a group and with some set of appenders attached to it
@@ -47,7 +47,7 @@ define(function(require) {
       };
       if(levels[level_string.toLowerCase()] !== undefined) { return levels[level_string.toLowerCase()]; }
       else { throw new Error('Unknown log level string: ' + level_string); }
-    }
+    };
 
     /**
      * Returns an appropriate appender object for an appender string from a logger config. Valid strings (case
@@ -69,7 +69,7 @@ define(function(require) {
     };
 
     var assemble_log_entry = function(message, level_string) {
-      timestamp = moment().format('YYYY-MM-DD HH:mm:ss.SSS');
+      var timestamp = moment().format('YYYY-MM-DD HH:mm:ss.SSS');
       return timestamp + ' ' + level_string.toUpperCase() + ' [' + that.group + '] ' + message;
     };
     // END PRIVATE FUNCTIONS
@@ -131,7 +131,7 @@ define(function(require) {
     // END PUBLIC FUNCTIONS
 
     // CONFIGURE OBJECT
-    this.group = options.group
+    this.group = options.group;
     this.log_level = parse_level(options.level);
     this.appenders = parse_appenders(options.appenders);
     // END CONFIGURE OBJECT
