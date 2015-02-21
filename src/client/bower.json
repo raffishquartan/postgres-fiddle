@@ -8,6 +8,7 @@
       "bootstrap": "3.1.x",
       "jquery": "2.1.x",
       "log4js": "1.0.x",
+      "moment": "2.9.x",
       "backbone": "1.1.x",
       "marionette": "2.3.x",
       "underscore": "1.7.x"
