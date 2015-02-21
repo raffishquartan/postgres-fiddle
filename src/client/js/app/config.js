@@ -4,8 +4,8 @@ define(function(require) {
       root: {
         js: {
           conf: {
-            level: "all",
-            appenders: ["console"]
+            level: 'all',
+            appenders: ['console']
           }
         }
       }
