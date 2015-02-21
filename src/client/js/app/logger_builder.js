@@ -1,6 +1,143 @@
 define(function(require) {
-  var Log4js = require('log4js');
   var _ = require('underscore');
+  var $ = require('jquery');
+  var moment = require('moment');
+
+  /**
+   * Console appender is responsible for writing a message to the console and nothing else. The Logger is responsible
+   * for deciding whether or not the message should be logged and for formatting the message appropriately.
+   *
+   * @param {Object} options Options - currently none used
+   */
+  var ConsoleAppender = function(options) {
+    if(!window.console) {
+      window.console = {};
+    }
+    this.log = console.log ? console.log.bind(console) : function() {};
+    this.trace = console.debug ? console.debug.bind(console) : this.log;
+    this.debug = console.debug ? console.debug.bind(console) : this.log;
+    this.info = this.log;
+    this.warn = this.log;
+    this.error = console.error ? console.error.bind(console) : this.warn;
+    this.fatal = console.fatal ? console.fatal.bind(console) : this.error;
+  }
+
+  /**
+   * A logger object, associated with a group and with some set of appenders attached to it
+   * @param {Object} options Required and possible properties are String:level Array[String]:appenders, String:group
+   */
+  var Logger = function(options) {
+    // PRIVATE FUNCTIONS
+    var that = this;
+
+    /**
+     * Converts level string from logger config into Log4js enum. Valid strings (case insensitive) are: all. trace,
+     * debug, info, warn, error, fatal
+     */
+    var parse_level = function(level_string) {
+      var levels = {
+        all:   0,
+        trace: 100,
+        debug: 200,
+        info:  300,
+        warn:  400,
+        error: 500,
+        fatal: 600,
+        off:   9999
+      };
+      if(levels[level_string.toLowerCase()] !== undefined) { return levels[level_string.toLowerCase()]; }
+      else { throw new Error('Unknown log level string: ' + level_string); }
+    }
+
+    /**
+     * Returns an appropriate appender object for an appender string from a logger config. Valid strings (case
+     * insensitive) are:
+     * - console
+     */
+    var parse_appenders = function(appender_strings) {
+      var appender_objects = [];
+      _.each(appender_strings, function(appender_string) {
+        switch(appender_string.toLowerCase()) {
+          case 'console': appender_objects.push(new ConsoleAppender()); break;
+          default: throw new Error('Unknown appender string: ' + appender_string);
+        }
+      });
+      if(appender_objects.length === 0) {
+        throw new Error('No appenders defined for logger ' + that.group);
+      }
+      return appender_objects;
+    };
+
+    var assemble_log_entry = function(message, level_string) {
+      timestamp = moment().format('YYYY-MM-DD HH:mm:ss.SSS');
+      return timestamp + ' ' + level_string.toUpperCase() + ' [' + that.group + '] ' + message;
+    };
+    // END PRIVATE FUNCTIONS
+
+    // PUBLIC PRIVILEGED FUNCTIONS
+    this.trace = function(message) {
+      if(this.log_level <= parse_level('trace')) {
+        var log_entry = assemble_log_entry(message, 'trace');
+        _.each(this.appenders, function(appender) {
+          appender.trace(log_entry);
+        });
+      }
+    };
+
+    this.debug = function(message) {
+      if(this.log_level <= parse_level('debug')) {
+        var log_entry = assemble_log_entry(message, 'debug');
+        _.each(this.appenders, function(appender) {
+          appender.debug(log_entry);
+        });
+      }
+    };
+
+    this.info = function(message) {
+      if(this.log_level <= parse_level('info')) {
+        var log_entry = assemble_log_entry(message, 'info');
+        _.each(this.appenders, function(appender) {
+          appender.info(log_entry);
+        });
+      }
+    };
+
+    this.warn = function(message) {
+      if(this.log_level <= parse_level('warn')) {
+        var log_entry = assemble_log_entry(message, 'warn');
+        _.each(this.appenders, function(appender) {
+          appender.warn(log_entry);
+        });
+      }
+    };
+
+    this.error = function(message) {
+      if(this.log_level <= parse_level('error')) {
+        var log_entry = assemble_log_entry(message, 'error');
+        _.each(this.appenders, function(appender) {
+          appender.error(log_entry);
+        });
+      }
+    };
+
+    this.fatal = function(message) {
+      if(this.log_level <= parse_level('fatal')) {
+        var log_entry = assemble_log_entry(message, 'fatal');
+        _.each(this.appenders, function(appender) {
+          appender.fatal(log_entry);
+        });
+      }
+    };
+    // END PUBLIC FUNCTIONS
+
+    // CONFIGURE OBJECT
+    this.group = options.group
+    this.log_level = parse_level(options.level);
+    this.appenders = parse_appenders(options.appenders);
+    // END CONFIGURE OBJECT
+  };
+
+
 
   /**
    * Returns the most specific conf in log_config for a given group.
@@ -13,7 +150,7 @@ define(function(require) {
    * @param  {Object} log_config   The logger configuration
    * @return {Object}              A conf object with fields level and appenders
    */
-  var get_group_config = function(group_string, log_config) {
+  var get_group_config_clone = function(group_string, log_config) {
     var group_elements = group_string.split('/');
     var current_level = log_config;
     for(var i = 0; i < group_elements.length; ++i) {
@@ -25,68 +162,38 @@ define(function(require) {
         break;
       }
     }
-    if(!current_level._conf) {
-      throw new Error('Group config for "' + group_string + '" is ' + current_level._conf);
+    if(!current_level.conf) {
+      throw new Error('Group config for "' + group_string + '" is ' + current_level.conf);
     }
     else {
-      return current_level._conf;
+      return $.extend(true, {}, current_level.conf); // TODO check this deep copies the appenders array as well
     }
-  }
-
-  /**
-   * Converts level string from logger config into Log4js enum. Valid strings (case insensitive) are:
-   * - all
-   * - trace
-   * - debug
-   * - info
-   * - warn
-   * - error
-   * - fatal
-   */
-  var parse_level = function(level_string) {
-    switch(level_string.toLowerCase()) {
-      case 'all':   return Log4js.Level.ALL;
-      case 'trace': return Log4js.Level.TRACE;
-      case 'debug': return Log4js.Level.DEBUG;
-      case 'info':  return Log4js.Level.INFO;
-      case 'warn':  return Log4js.Level.WARN;
-      case 'error': return Log4js.Level.ERROR;
-      case 'fatal': return Log4js.Level.FATAL;
-      case 'off':   return Log4js.Level.OFF;
-      default: throw new Error('Unknown Log4js.Level string: ' + level_string);
-    }
-  }
-
-  /**
-   * Returns an appropriate appender object for an appender string from a logger config. Valid strings (case
-   * insensitive) are:
-   * - console
-   */
-  var parse_appender = function(appender_string) {
-    switch(appender_string.toLowerCase()) {
-      case 'console': return new ConsoleAppender(true);
-      default: throw new Error('Unknown Log4js appender string: ' + appender_string);
-    }
-  }
+  };
 
   /**
    * Returned from this module, can be used to build logs according to the log_config parameter
    */
   var logger_builder = function(log_config) {
+    var existing_loggers = {};
+
     return {
       /**
-       * Returns a logger object that is configured according to the application config.logger property
+       * Returns a logger object that is configured according to the application config.logger property. If the logger
+       * has been created before then a cached copy is returned.
+       *
        * @param  {String} group The logger group - usually the path to the javascript file
        * @return {Object}       A logger object for {{group}}
        */
       get_logger: function(group) {
-        var logger_config = get_group_config(group, log_config);
-        var logger = Log4js.getLogger(group);
-        logger.setLevel(parse_level(logger_config.level));
-        _.each(logger_config.appenders, function(appender) {
-          logger.addAppender(parse_appender(appender));
-        });
-        return logger;
+        if(existing_loggers[group]) {
+          return existing_loggers[group];
+        }
+        else {
+          var logger_specific_config = get_group_config_clone(group, log_config);
+          logger_specific_config.group = group;
+          existing_loggers[group] = new Logger(logger_specific_config);
+          return existing_loggers[group];
+        }
       }
     };
   };
