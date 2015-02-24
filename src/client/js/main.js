@@ -3,7 +3,8 @@ require([
   'js/app/obj',
   'js/apps/footer/footer_app',
   'js/apps/header/header_app',
-  'js/apps/home/home_app'
+  'js/apps/home/home_app',
+  'js/apps/about/about_app'
 ], function(RequireConfig, PF){
   var logger = PF.logger.get_logger('root/js/main');
   logger.trace('require:lambda - enter');
