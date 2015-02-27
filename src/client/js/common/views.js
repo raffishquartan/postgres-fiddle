@@ -6,12 +6,10 @@ define(function(require) {
   PF.module('Common.Views', function(Views, PF, Backbone, Marionette, $, _) {
     logger.trace('PF.module:Common.Views - enter');
     Views.PFItemView = Marionette.ItemView.extend();
-
     Views.PFCollectionView = Marionette.CollectionView.extend();
-
     Views.PFCompositeView = Marionette.CompositeView.extend();
-
     Views.PFLayout = Marionette.LayoutView.extend();
+    Views.PFRegion = Marionette.Region.extend();
     logger.trace('PF.module:Common.Views - exit');
   });
   logger.trace('require:lambda - exit');
