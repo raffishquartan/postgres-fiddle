@@ -12,6 +12,11 @@ define(function(require) {
         var Views = require('js/apps/header/show/views');
         var navitem_collection = PF.request('headerapp:entities:navitems');
         var view = new Views.Header({ collection: navitem_collection });
+
+        view.on('brand_clicked', function() {
+          PF.trigger('home:show');
+        });
+
         PF.region_navbar.show(view);
         logger.trace('HeaderApp.Show.controller.show_header -- exit');
       }
