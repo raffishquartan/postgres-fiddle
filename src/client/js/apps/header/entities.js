@@ -7,24 +7,28 @@ define(function(require) {
 
     Entities.NavItem = PF.Entities.PFClientOnlyModel.extend({
       initialize: function() {
-        require('backbone_picky');
+        logger.trace('HeaderApp.Entities.NavItem.initialize -- enter w/ url: ' + this.get('url'));
         _.extend(this, new Backbone.Picky.Selectable(this));
+        logger.trace('HeaderApp.Entities.NavItem.initialize -- exit');
       }
     });
 
     Entities.NavItemCollection = PF.Entities.PFClientOnlyCollection.extend({
+      model: Entities.NavItem,
+
       initialize: function() {
-        require('backbone_picky');
+        logger.trace('HeaderApp.Entities.NavItemCollection.initialize -- enter');
         _.extend(this, new Backbone.Picky.SingleSelect(this));
+        logger.trace('HeaderApp.Entities.NavItemCollection.initialize -- exit');
       }
     });
 
     var initialize_navitems = function() {
       logger.trace('HeaderApp.Entities - initialize_navitems -- enter');
       Entities.navitem_collection = new Entities.NavItemCollection([
-        { name: 'Home Page',  url: 'home',    icon: 'glyphicon-home' },
-        { name: 'Wins',       url: 'wins',    icon: 'glyphicon-th-list' },
-        { name: 'About',      url: 'about',   icon: 'glyphicon-tree-conifer' }
+        { name: 'Home Page',  url: 'home',  nav_trigger: 'home:show',   icon: 'glyphicon-home' },
+        { name: 'Wins',       url: 'wins',  nav_trigger: 'NULLOP-NYI',  icon: 'glyphicon-th-list' },
+        { name: 'About',      url: 'about', nav_trigger: 'about:show',  icon: 'glyphicon-tree-conifer' }
       ]);
       logger.trace('HeaderApp.Entities - initialize_navitems -- exit');
     };
@@ -42,8 +46,10 @@ define(function(require) {
     };
 
     PF.reqres.setHandler('headerapp:entities:navitems', function() {
-      logger.trace('PF.reqres - headerapp:entitites:navitems -- enter, exit');
-      return API.get_navitems();
+      logger.trace('PF.reqres - headerapp:entities:navitems -- enter');
+      var result = API.get_navitems();
+      logger.trace('PF.reqres - headerapp:entities:navitems -- exit');
+      return result;
     })
   });
 

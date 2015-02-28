@@ -9,7 +9,22 @@ define(function(require) {
 
     Views.NavItemView = PF.Common.Views.PFItemView.extend({
       template: _.template(require('text!js/apps/header/show/templates/navitem.html')),
-      tagName: 'li'
+      tagName: 'li',
+
+      events: {
+        'click a.js-navitem': 'on_clicked'
+      },
+
+      on_clicked: function(e) {
+        e.preventDefault();
+        this.trigger('navigate', this.model);
+      },
+
+      onRender: function() {
+        if(this.model.selected) {
+          this.$el.addClass('active');
+        }
+      }
     });
 
     Views.Header = PF.Common.Views.PFCompositeView.extend({
