@@ -1,6 +1,6 @@
 define(function(require) {
   var PF = require('js/app/obj');
-  var logger = PF.logger.get_logger('root/js/entities/common');
+  var logger = PF.logger.get_logger('root/js/common/entities');
   logger.trace('require:lambda -- enter');
 
   PF.module('Entities', function(Entities, PF, Backbone, Marionette, $, _) {

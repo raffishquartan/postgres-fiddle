@@ -3,7 +3,7 @@ define(function(require) {
   var logger = PF.logger.get_logger('root/js/apps/header/entities');
 
   PF.module('HeaderApp.Entities', function(Entities, PF, Backbone, Marionette, $, _) {
-    require('js/entities/common');
+    require('js/common/entities');
 
     Entities.NavItem = PF.Entities.PFClientOnlyModel.extend({
       initialize: function() {
