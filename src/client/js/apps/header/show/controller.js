@@ -14,11 +14,41 @@ define(function(require) {
         var view = new Views.Header({ collection: navitem_collection });
 
         view.on('brand_clicked', function() {
+          logger.trace('HeaderApp.Show.controller.event - brand_clicked -- enter');
           PF.trigger('home:show');
+          logger.trace('HeaderApp.Show.controller.event - brand_clicked -- exit');
         });
+
+        view.on('childview:navigate', function(child_view, model) {
+          logger.trace('HeaderApp.Show.controller.event - childview:navigate -- enter w/ ' + model.get('nav_trigger'));
+          PF.trigger(model.get('nav_trigger'));
+          logger.trace('HeaderApp.Show.controller.event - childview:navigate -- exit');
+        })
 
         PF.region_navbar.show(view);
         logger.trace('HeaderApp.Show.controller.show_header -- exit');
+      },
+
+      set_active_navitem: function(url) {
+        logger.debug('HeaderApp.Show.controller.set_active_navitem -- setting ' + url + ' to active');
+        require('backbone_picky');
+        require('js/apps/header/entities');
+        var navitem_collection = PF.request('headerapp:entities:navitems');
+        var navitem_to_select = navitem_collection.find(function(navitem) {
+          return navitem.get('url') === url;
+        });
+        if(navitem_to_select) {
+          navitem_to_select.select();
+          navitem_collection.trigger("reset");
+        }
+        else { // deselect all nav items in this menu (navitem url is not in this menu)
+          logger.warn('Navitem to select is not in main navbar: ' + url);
+          navitem_collection.each(function(navitem) {
+            navitem.deselect();
+          });
+          navitem_collection.trigger("reset");
+        }
+        logger.trace('HeaderApp.Show.controller.set_active_navitem -- exit');
       }
     };
     logger.trace('PF.module -- exit');

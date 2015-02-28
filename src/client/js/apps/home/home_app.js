@@ -16,6 +16,7 @@ define(function(require) {
         logger.trace('HomeApp - API.show_home -- enter');
         var controller = require('js/apps/home/show/controller');
         controller.show_home();
+        PF.execute('headerapp:set_active_navitem', 'home');
         logger.trace('HomeApp - API.show_home -- exit');
       },
     };

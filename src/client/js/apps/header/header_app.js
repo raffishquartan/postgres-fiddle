@@ -14,8 +14,8 @@ define(function(require) {
       },
     };
 
-    PF.commands.setHandler('headerapp:navitem:active:set', function(name) {
-      HeaderApp.Show.controller.set_active_header(name);
+    PF.commands.setHandler('headerapp:set_active_navitem', function(url) {
+      HeaderApp.Show.controller.set_active_navitem(url);
     });
 
     HeaderApp.on("start", function() {
