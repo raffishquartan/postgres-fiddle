@@ -7,11 +7,11 @@ define(function(require) {
     logger.trace('PF.module -- enter');
     Show.controller = {
       show_home: function() {
-        logger.trace('HomeApp.Show.controller.show_home -- enter');
+        logger.trace('show_home -- enter');
         var Views = require('js/apps/home/show/views');
         var view = new Views.Home();
         PF.region_main.show(view);
-        logger.trace('HomeApp.Show.controller.show_home -- exit');
+        logger.trace('show_home -- exit');
       }
     };
     logger.trace('PF.module -- exit');

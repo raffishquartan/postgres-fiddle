@@ -7,9 +7,9 @@ define(function(require) {
 
     Entities.NavItem = PF.Entities.PFClientOnlyModel.extend({
       initialize: function() {
-        logger.trace('HeaderApp.Entities.NavItem.initialize -- enter w/ url: ' + this.get('url'));
+        logger.trace('NavItem.initialize -- enter w/ url: ' + this.get('url'));
         _.extend(this, new Backbone.Picky.Selectable(this));
-        logger.trace('HeaderApp.Entities.NavItem.initialize -- exit');
+        logger.trace('NavItem.initialize -- exit');
       }
     });
 
@@ -17,30 +17,30 @@ define(function(require) {
       model: Entities.NavItem,
 
       initialize: function() {
-        logger.trace('HeaderApp.Entities.NavItemCollection.initialize -- enter');
+        logger.trace('NavItemCollection.initialize -- enter');
         _.extend(this, new Backbone.Picky.SingleSelect(this));
-        logger.trace('HeaderApp.Entities.NavItemCollection.initialize -- exit');
+        logger.trace('NavItemCollection.initialize -- exit');
       }
     });
 
     var initialize_navitems = function() {
-      logger.trace('HeaderApp.Entities - initialize_navitems -- enter');
+      logger.trace('initialize_navitems -- enter');
       Entities.navitem_collection = new Entities.NavItemCollection([
         { name: 'Home Page',  url: 'home',  nav_trigger: 'home:show',   icon: 'glyphicon-home' },
         { name: 'Wins',       url: 'wins',  nav_trigger: 'NULLOP-NYI',  icon: 'glyphicon-th-list' },
         { name: 'About',      url: 'about', nav_trigger: 'about:show',  icon: 'glyphicon-tree-conifer' }
       ]);
-      logger.trace('HeaderApp.Entities - initialize_navitems -- exit');
+      logger.trace('initialize_navitems -- exit');
     };
 
     var API = {
       get_navitems: function() {
-        logger.trace('HeaderApp.Entities - API.get_navitems -- enter');
+        logger.trace('API.get_navitems -- enter');
         if(Entities.navitem_collection === undefined) {
-          logger.trace('HeaderApp.Entities - API.get_navitems -- initializing navitems');
+          logger.trace('API.get_navitems -- initializing navitems');
           initialize_navitems();
         }
-        logger.trace('HeaderApp.Entities - API.get_navitems -- exit');
+        logger.trace('API.get_navitems -- exit');
         return Entities.navitem_collection;
       }
     };
