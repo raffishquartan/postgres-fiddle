@@ -20,6 +20,7 @@ require.config({
   },
   paths: {
     backbone: '/bower_components/backbone/backbone',
+    'backbone.picky': '/bower_components/backbone.picky/amd/backbone.picky.min',
     bootstrap: '/bower_components/bootstrap/dist/js/bootstrap',
     jquery: '/bower_components/jquery/dist/jquery',
     marionette: '/bower_components/marionette/lib/backbone.marionette',
