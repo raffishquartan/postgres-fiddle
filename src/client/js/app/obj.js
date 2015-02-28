@@ -16,12 +16,31 @@ define(function(require) {
     'region_footer': 'div#region_footer'
   });
 
+  // Routing helpers
+  PF.navigate = function(route, options) {
+    options = options || {};
+    Backbone.history.navigate(route, options);
+  }
+
+  PF.get_current_route = function() {
+    return Backbone.history.fragment;
+  }
+
   // Set application to start after initialisation
   PF.on('start', function(options) {
     logger.trace('PF.event - start -- enter');
-    Backbone.history.start({ // assume router already required elsewhere, e.g. in main.js
-      pushState: true
-    });
+    if(Backbone.history) {
+      Backbone.history.start({ // assume router already required elsewhere, e.g. in main.js
+        pushState: true
+      });
+
+      if(Backbone.history.fragment === '') {
+        PF.trigger('home:show');
+      }
+    }
+    else {
+      logger.error('Backbone.history is falsey: ' + Backbone.history);
+    }
     logger.trace('PF.event - start -- exit');
   });
 
