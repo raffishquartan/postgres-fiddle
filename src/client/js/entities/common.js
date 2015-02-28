@@ -1,5 +1,5 @@
 define(function(require) {
-  var PF = require('app-obj');
+  var PF = require('js/app/obj');
   var logger = PF.logger.get_logger('root/js/entities/common');
   logger.trace('require:lambda -- enter');
 
