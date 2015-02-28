@@ -6,8 +6,20 @@ define(function(require) {
       root: {
         js: {
           conf: {
-            level: 'all',
+            level: 'debug',
             appenders: ['console']
+          },
+          apps: {
+            conf: {
+              level: 'debug',
+              appenders: ['console']
+            },
+            header: {
+              conf: {
+                level: 'trace',
+                appenders: ['console']
+              }
+            }
           }
         }
       }
