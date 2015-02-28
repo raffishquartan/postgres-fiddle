@@ -15,7 +15,16 @@ define(function(require) {
     Views.Header = PF.Common.Views.PFCompositeView.extend({
       template: _.template(require('text!js/apps/header/show/templates/header.html')),
       childView: Views.NavItemView,
-      childViewContainer: 'ul.js-navbar-items'
+      childViewContainer: 'ul.js-navbar-items',
+
+      events: {
+        'click a.js-brand': 'brand_clicked'
+      },
+
+      brand_clicked: function(e) {
+        e.preventDefault();
+        this.trigger('brand_clicked');
+      }
     });
 
     logger.trace('PF.module -- exit');
