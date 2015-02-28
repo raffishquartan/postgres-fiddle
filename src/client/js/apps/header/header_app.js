@@ -7,10 +7,10 @@ define(function(require) {
     logger.trace('PF.module -- enter');
     var API = {
       show_header: function() {
-        logger.trace('HeaderApp - API.show_header -- enter');
+        logger.trace('API.show_header -- enter');
         var controller = require('js/apps/header/show/controller');
         controller.show_header();
-        logger.trace('HeaderApp - API.show_header -- exit');
+        logger.trace('API.show_header -- exit');
       },
     };
 

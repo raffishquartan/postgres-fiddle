@@ -13,11 +13,11 @@ define(function(require) {
 
     var API = {
       show_about: function() {
-        logger.trace('AboutApp - API.show_about -- enter');
+        logger.trace('API.show_about -- enter');
         var controller = require('js/apps/about/show/controller');
         controller.show_about();
         PF.execute('headerapp:set_active_navitem', 'about');
-        logger.trace('AboutApp - API.show_about -- exit');
+        logger.trace('API.show_about -- exit');
       },
     };
 
@@ -28,7 +28,7 @@ define(function(require) {
       logger.trace('PF.event - about:show -- exit');
     });
 
-    PF.addInitializer(function(){
+    PF.addInitializer(function() {
       logger.trace('PF.addInitializer -- enter');
       new AboutApp.Router({
         controller: API

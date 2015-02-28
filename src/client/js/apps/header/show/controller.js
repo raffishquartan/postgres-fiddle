@@ -7,30 +7,30 @@ define(function(require) {
     logger.trace('PF.module -- enter');
     Show.controller = {
       show_header: function() {
-        logger.trace('HeaderApp.Show.controller.show_header -- enter');
+        logger.trace('show_header -- enter');
         require('js/apps/header/entities');
         var Views = require('js/apps/header/show/views');
         var navitem_collection = PF.request('headerapp:entities:navitems');
         var view = new Views.Header({ collection: navitem_collection });
 
         view.on('brand_clicked', function() {
-          logger.trace('HeaderApp.Show.controller.event - brand_clicked -- enter');
+          logger.trace('event - brand_clicked -- enter');
           PF.trigger('home:show');
-          logger.trace('HeaderApp.Show.controller.event - brand_clicked -- exit');
+          logger.trace('event - brand_clicked -- exit');
         });
 
         view.on('childview:navigate', function(child_view, model) {
-          logger.trace('HeaderApp.Show.controller.event - childview:navigate -- enter w/ ' + model.get('nav_trigger'));
+          logger.trace('event - childview:navigate -- enter w/ ' + model.get('nav_trigger'));
           PF.trigger(model.get('nav_trigger'));
-          logger.trace('HeaderApp.Show.controller.event - childview:navigate -- exit');
+          logger.trace('event - childview:navigate -- exit');
         })
 
         PF.region_navbar.show(view);
-        logger.trace('HeaderApp.Show.controller.show_header -- exit');
+        logger.trace('show_header -- exit');
       },
 
       set_active_navitem: function(url) {
-        logger.debug('HeaderApp.Show.controller.set_active_navitem -- setting ' + url + ' to active');
+        logger.debug('set_active_navitem -- setting ' + url + ' to active');
         require('backbone_picky');
         require('js/apps/header/entities');
         var navitem_collection = PF.request('headerapp:entities:navitems');
@@ -48,7 +48,7 @@ define(function(require) {
           });
           navitem_collection.trigger("reset");
         }
-        logger.trace('HeaderApp.Show.controller.set_active_navitem -- exit');
+        logger.trace('set_active_navitem -- exit');
       }
     };
     logger.trace('PF.module -- exit');
