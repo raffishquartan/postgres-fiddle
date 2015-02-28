@@ -7,7 +7,7 @@ define(function(require) {
     logger.trace('PF.module -- enter');
     HomeApp.Router = Marionette.AppRouter.extend({
       appRoutes: {
-        '': 'show_home',
+        'home': 'show_home'
       }
     });
 
@@ -22,7 +22,7 @@ define(function(require) {
 
     PF.on('home:show', function() {
       logger.trace('PF.event - home:show -- enter');
-      PF.navigate('');
+      PF.navigate('home');
       API.show_home();
       logger.trace('PF.event - home:show -- exit');
     });
