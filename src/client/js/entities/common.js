@@ -1,10 +1,10 @@
 define(function(require) {
   var PF = require('app-obj');
   var logger = PF.logger.get_logger('root/js/entities/common');
-  logger.trace('require:lambda - enter');
+  logger.trace('require:lambda -- enter');
 
   PF.module('Entities', function(Entities, PF, Backbone, Marionette, $, _) {
-    logger.trace('PF.module:Entities - enter');
+    logger.trace('PF.module -- enter');
     Entities.PFDatabaseModel = Backbone.Model.extend({
       idAttribute: '_id',
     });
@@ -40,9 +40,9 @@ define(function(require) {
       logger.warn('Entities.PFClientOnlyCollection.save called, method does nothing and returns null');
       return null;
     };
-    logger.trace('PF.module:Entities - exit');
+    logger.trace('PF.module -- exit');
   });
 
-  logger.trace('require:lambda - exit');
+  logger.trace('require:lambda -- exit');
   return undefined;
 });

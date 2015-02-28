@@ -7,10 +7,10 @@ require([
   'js/apps/about/about_app'
 ], function(RequireConfig, PF){
   var logger = PF.logger.get_logger('root/js/main');
-  logger.trace('require:lambda - enter');
+  logger.trace('require:lambda -- enter');
   RegExp.escape_text= function(s) {
       return s.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
   };
   PF.start();
-  logger.trace('require:lambda - exit');
+  logger.trace('require:lambda -- exit');
 });

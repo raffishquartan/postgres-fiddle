@@ -7,7 +7,7 @@ define(function(require) {
   PF.config = require('js/app/config');
   PF.logger = require('js/app/logger_builder')(PF.config.logger);
   var logger = PF.logger.get_logger('root/js/app/obj');
-  logger.debug('require:lambda - entered, PF built, config loaded, logger initialised');
+  logger.debug('require:lambda -- entered, PF built, config loaded, logger initialised');
 
   // Set up regions
   PF.addRegions({
@@ -18,13 +18,13 @@ define(function(require) {
 
   // Set application to start after initialisation
   PF.on('start', function(options) {
-    logger.trace('PF.event:start obj.js - enter');
+    logger.trace('PF.event - start -- enter');
     Backbone.history.start({ // assume router already required elsewhere, e.g. in main.js
       pushState: true
     });
-    logger.trace('PF.event:start obj.js - exit');
+    logger.trace('PF.event - start -- exit');
   });
 
-  logger.debug('require:lambda - exit');
+  logger.debug('require:lambda -- exited, PF regions and on-start listener initialised');
   return PF;
 });
