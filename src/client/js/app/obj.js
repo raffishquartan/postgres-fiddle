@@ -20,11 +20,11 @@ define(function(require) {
   PF.navigate = function(route, options) {
     options = options || {};
     Backbone.history.navigate(route, options);
-  }
+  };
 
   PF.get_current_route = function() {
     return Backbone.history.fragment;
-  }
+  };
 
   // Set application to start after initialisation
   PF.on('start', function(options) {

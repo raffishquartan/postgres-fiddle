@@ -50,7 +50,7 @@ define(function(require) {
       var result = API.get_navitems();
       logger.trace('PF.reqres - headerapp:entities:navitems -- exit');
       return result;
-    })
+    });
   });
 
   return undefined;

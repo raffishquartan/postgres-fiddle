@@ -23,7 +23,7 @@ define(function(require) {
           logger.trace('event - childview:navigate -- enter w/ ' + model.get('nav_trigger'));
           PF.trigger(model.get('nav_trigger'));
           logger.trace('event - childview:navigate -- exit');
-        })
+        });
 
         PF.region_navbar.show(view);
         logger.trace('show_header -- exit');
@@ -39,14 +39,14 @@ define(function(require) {
         });
         if(navitem_to_select) {
           navitem_to_select.select();
-          navitem_collection.trigger("reset");
+          navitem_collection.trigger('reset');
         }
         else { // deselect all nav items in this menu (navitem url is not in this menu)
           logger.warn('Navitem to select is not in main navbar: ' + url);
           navitem_collection.each(function(navitem) {
             navitem.deselect();
           });
-          navitem_collection.trigger("reset");
+          navitem_collection.trigger('reset');
         }
         logger.trace('set_active_navitem -- exit');
       }

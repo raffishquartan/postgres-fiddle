@@ -14,11 +14,11 @@ define(function(require) {
       },
     };
 
-    FooterApp.on("start", function() {
-      logger.trace("FooterApp.event - start -- enter");
+    FooterApp.on('start', function() {
+      logger.trace('FooterApp.event - start -- enter');
       API.show_footer();
-      logger.trace("FooterApp.event - start -- exit");
-    })
+      logger.trace('FooterApp.event - start -- exit');
+    });
     logger.trace('PF.module -- exit');
   });
 
