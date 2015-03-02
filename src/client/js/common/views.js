@@ -1,4 +1,6 @@
 define(function(require) {
+  'use strict';
+
   var PF = require('js/app/obj');
   var logger = PF.logger.get_logger('root/js/common/views');
   logger.trace('require:lambda -- enter');

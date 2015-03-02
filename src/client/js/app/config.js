@@ -1,6 +1,8 @@
 // NO LOGGING IN THIS FILE
 
 define(function(require) {
+  'use strict';
+
   var config = {
     logger: {
       root: {

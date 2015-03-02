@@ -6,6 +6,8 @@ require([
   'js/apps/home/home_app',
   'js/apps/about/about_app'
 ], function(RequireConfig, PF){
+  'use strict';
+
   var logger = PF.logger.get_logger('root/js/main');
   logger.trace('require:lambda -- enter');
   RegExp.escape_text= function(s) {
