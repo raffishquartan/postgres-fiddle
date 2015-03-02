@@ -12,22 +12,24 @@ define(function(require) {
         logger.trace('show_header -- enter');
         require('js/apps/header/entities');
         var Views = require('js/apps/header/show/views');
-        var navitem_collection = PF.request('headerapp:entities:navitems');
-        var view = new Views.Header({ collection: navitem_collection });
+        var navitem_collection_promise = PF.request('headerapp:entities:navitems');
+        navitem_collection_promise.then(function(navitem_collection) {
+          var view = new Views.Header({ collection: navitem_collection });
 
-        view.on('brand_clicked', function() {
-          logger.trace('event - brand_clicked -- enter');
-          PF.trigger('home:show');
-          logger.trace('event - brand_clicked -- exit');
+          view.on('brand_clicked', function() {
+            logger.trace('event - brand_clicked -- enter');
+            PF.trigger('home:show');
+            logger.trace('event - brand_clicked -- exit');
+          });
+
+          view.on('childview:navigate', function(child_view, model) {
+            logger.trace('event - childview:navigate -- enter w/ ' + model.get('nav_trigger'));
+            PF.trigger(model.get('nav_trigger'));
+            logger.trace('event - childview:navigate -- exit');
+          });
+
+          PF.region_navbar.show(view);
         });
-
-        view.on('childview:navigate', function(child_view, model) {
-          logger.trace('event - childview:navigate -- enter w/ ' + model.get('nav_trigger'));
-          PF.trigger(model.get('nav_trigger'));
-          logger.trace('event - childview:navigate -- exit');
-        });
-
-        PF.region_navbar.show(view);
         logger.trace('show_header -- exit');
       },
 
@@ -35,21 +37,23 @@ define(function(require) {
         logger.debug('set_active_navitem -- setting ' + url + ' to active');
         require('backbone_picky');
         require('js/apps/header/entities');
-        var navitem_collection = PF.request('headerapp:entities:navitems');
-        var navitem_to_select = navitem_collection.find(function(navitem) {
-          return navitem.get('url') === url;
-        });
-        if(navitem_to_select) {
-          navitem_to_select.select();
-          navitem_collection.trigger('reset');
-        }
-        else { // deselect all nav items in this menu (navitem url is not in this menu)
-          logger.warn('Navitem to select is not in main navbar: ' + url);
-          navitem_collection.each(function(navitem) {
-            navitem.deselect();
+        var navitem_collection_promise = PF.request('headerapp:entities:navitems');
+        navitem_collection_promise.then(function(navitem_collection) {
+          var navitem_to_select = navitem_collection.find(function(navitem) {
+            return navitem.get('url') === url;
           });
-          navitem_collection.trigger('reset');
-        }
+          if(navitem_to_select) {
+            navitem_to_select.select();
+            navitem_collection.trigger('reset');
+          }
+          else { // deselect all nav items in this menu (navitem url is not in this menu)
+            logger.warn('Navitem to select is not in main navbar: ' + url);
+            navitem_collection.each(function(navitem) {
+              navitem.deselect();
+            });
+            navitem_collection.trigger('reset');
+          }
+        });
         logger.trace('set_active_navitem -- exit');
       }
     };

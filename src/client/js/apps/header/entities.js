@@ -1,6 +1,7 @@
 define(function(require) {
   'use strict';
 
+  var q = require('q');
   var PF = require('js/app/obj');
   var logger = PF.logger.get_logger('root/js/apps/header/entities');
 
@@ -36,20 +37,22 @@ define(function(require) {
     };
 
     var API = {
-      get_navitems: function() {
-        logger.trace('API.get_navitems -- enter');
+      get_navitem_promise: function() {
+        logger.trace('API.get_navitems_promise -- enter');
+        var deferred = q.defer();
         if(Entities.navitem_collection === undefined) {
-          logger.trace('API.get_navitems -- initializing navitems');
+          logger.trace('API.get_navitems_promise -- initializing navitems');
           initialize_navitems();
         }
-        logger.trace('API.get_navitems -- exit');
-        return Entities.navitem_collection;
+        deferred.resolve(Entities.navitem_collection);
+        logger.trace('API.get_navitems_promise -- exit');
+        return deferred.promise;
       }
     };
 
     PF.reqres.setHandler('headerapp:entities:navitems', function() {
       logger.trace('PF.reqres - headerapp:entities:navitems -- enter');
-      var result = API.get_navitems();
+      var result = API.get_navitem_promise();
       logger.trace('PF.reqres - headerapp:entities:navitems -- exit');
       return result;
     });
