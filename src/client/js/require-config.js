@@ -26,6 +26,7 @@ require.config({
     jquery: '/bower_components/jquery/dist/jquery',
     marionette: '/bower_components/marionette/lib/backbone.marionette',
     moment: '/bower_components/moment/min/moment-with-locales.min',
+    q: '/bower_components/q/q',
     text: '/bower_components/requirejs-text/text',
     underscore: '/bower_components/underscore/underscore'
   },
