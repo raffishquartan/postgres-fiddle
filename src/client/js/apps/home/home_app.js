@@ -30,9 +30,11 @@ define(function(require) {
 
     PF.addInitializer(function(){
       logger.trace('PF.addInitializer -- enter');
-      new HomeApp.Router({
-        controller: API
-      });
+      (function() {
+        return new HomeApp.Router({
+          controller: API
+        });
+      }());
       logger.trace('PF.addInitializer -- exit');
     });
     logger.trace('PF.module -- exit');

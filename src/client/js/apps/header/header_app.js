@@ -18,11 +18,11 @@ define(function(require) {
       HeaderApp.Show.controller.set_active_navitem(url);
     });
 
-    HeaderApp.on("start", function() {
-      logger.trace("HeaderApp.event - start -- enter");
+    HeaderApp.on('start', function() {
+      logger.trace('HeaderApp.event - start -- enter');
       API.show_header();
-      logger.trace("HeaderApp.event - start -- exit");
-    })
+      logger.trace('HeaderApp.event - start -- exit');
+    });
     logger.trace('PF.module -- exit');
   });
 
