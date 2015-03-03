@@ -22,9 +22,9 @@ define(function(require) {
             logger.trace('event - brand_clicked -- exit');
           });
 
-          view.on('childview:navigate', function(child_view, model) {
-            logger.trace('event - childview:navigate -- enter w/ ' + model.get('nav_trigger'));
-            PF.trigger(model.get('nav_trigger'));
+          view.on('childview:navigate', function(args) {
+            logger.trace('event - childview:navigate -- enter w/ ' + args.model.get('nav_trigger'));
+            PF.trigger(args.model.get('nav_trigger'));
             logger.trace('event - childview:navigate -- exit');
           });
 
