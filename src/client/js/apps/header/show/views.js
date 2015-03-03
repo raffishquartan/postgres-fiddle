@@ -13,13 +13,8 @@ define(function(require) {
       template: _.template(require('text!js/apps/header/show/templates/navitem.html')),
       tagName: 'li',
 
-      events: {
-        'click a.js-navitem': 'on_clicked'
-      },
-
-      on_clicked: function(e) {
-        e.preventDefault();
-        this.trigger('navigate', this.model);
+      triggers: {
+        'click a.js-navitem': 'navigate'
       },
 
       onRender: function() {
@@ -34,13 +29,8 @@ define(function(require) {
       childView: Views.NavItemView,
       childViewContainer: 'ul.js-navbar-items',
 
-      events: {
+      triggers: {
         'click a.js-brand': 'brand_clicked'
-      },
-
-      brand_clicked: function(e) {
-        e.preventDefault();
-        this.trigger('brand_clicked');
       }
     });
 
