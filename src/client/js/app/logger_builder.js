@@ -81,7 +81,7 @@ define(function(require) {
     // PUBLIC PRIVILEGED FUNCTIONS
     // TODO: Refactor so that these methos are on the prototype, not the instance
     this.is_trace_enabled = function() {
-      return this.log_level <= parse_level('trace'));
+      return this.log_level <= parse_level('trace');
     };
 
     this.trace = function(message) {
@@ -94,7 +94,7 @@ define(function(require) {
     };
 
     this.is_debug_enabled = function() {
-      return this.log_level <= parse_level('debug'));
+      return this.log_level <= parse_level('debug');
     };
 
     this.debug = function(message) {
@@ -120,7 +120,7 @@ define(function(require) {
     };
 
     this.is_warn_enabled = function() {
-      return this.log_level <= parse_level('warn'));
+      return this.log_level <= parse_level('warn');
     };
 
     this.warn = function(message) {
@@ -133,7 +133,7 @@ define(function(require) {
     };
 
     this.is_error_enabled = function() {
-      return this.log_level <= parse_level('error'));
+      return this.log_level <= parse_level('error');
     };
 
     this.error = function(message) {
@@ -146,7 +146,7 @@ define(function(require) {
     };
 
     this.is_fatal_enabled = function() {
-      return this.log_level <= parse_level('error'));
+      return this.log_level <= parse_level('fatal');
     };
 
     this.fatal = function(message) {

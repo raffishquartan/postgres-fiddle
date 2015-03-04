@@ -23,6 +23,12 @@ define(function(require) {
               }
             }
           }
+        },
+        events_logger: {
+          conf: {
+            level: 'trace',
+            appenders: ['console']
+          }
         }
       }
     }
