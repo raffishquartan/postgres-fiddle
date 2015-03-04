@@ -1,26 +1,42 @@
 {
-  "appenders": [{
-    "category": "express",
-    "type": "dateFile",
-    "filename": "logs/postgres-fiddle.node.log",
-    "pattern": "-yyyy-MM-dd",
-    "alwaysIncludePattern": false
-  }, {
-    "category": "express",
-    "type": "console"
-  }, {
-    "category": "server",
-    "type": "dateFile",
-    "filename": "logs/postgres-fiddle.node.log",
-    "pattern": "-yyyy-MM-dd",
-    "alwaysIncludePattern": false
-  }, {
-    "category": "server",
-    "type": "console"
-  }],
+  "log4js": {
+    "appenders": [{
+      "category": "express-appender",
+      "type": "dateFile",
+      "filename": "logs/postgres-fiddle.node.log",
+      "pattern": "-yyyy-MM-dd",
+      "alwaysIncludePattern": false
+    }, {
+      "category": "express-appender",
+      "type": "console"
+    }, {
+      "category": "basic-appender",
+      "type": "dateFile",
+      "filename": "logs/postgres-fiddle.node.log",
+      "pattern": "-yyyy-MM-dd",
+      "alwaysIncludePattern": false
+    }, {
+      "category": "basic-appender",
+      "type": "console"
+    }],
 
-  "levels": {
-    "express": "info",
-    "server": "info"
+    "levels": {
+      "express-appender": "info",
+      "basic-appender": "info"
+    }
+  },
+  "loggers": {
+    "app": {
+      "conf": {
+        "level": "info",
+        "destgroups": ["basic-appender"]
+      }
+    },
+    "express": {
+      "conf": {
+        "level": "info",
+        "destgroups": ["express-appender", "basic-appender"]
+      }
+    }
   }
 }
