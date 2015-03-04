@@ -41,10 +41,10 @@ function configure_express_middleware(app) {
   app.use(log4js.connectLogger(L.express, { level: 'auto', format: C.express_logger_format }));
   app.use(body_parser.json());
   app.use(body_parser.urlencoded({ extended: false }));
-  app.use(method_override('X-HTTP-Method'))          // Microsoft
-  app.use(method_override('X-HTTP-Method-Override')) // Google/GData
-  app.use(method_override('X-Method-Override'))      // IBM
-  app.use("/api", require('app/api/entry/router'));
+  app.use(method_override('X-HTTP-Method'));          // Microsoft
+  app.use(method_override('X-HTTP-Method-Override')); // Google/GData
+  app.use(method_override('X-Method-Override'));      // IBM
+  app.use('/api', require('app/api/entry/router'));
   app.use('/assets', express.static(path.join(C.client_root, 'assets')));
   app.use('/bower_components', express.static(path.join(C.client_root, 'bower_components')));
   app.use('/js', express.static(path.join(C.client_root, 'js')));
