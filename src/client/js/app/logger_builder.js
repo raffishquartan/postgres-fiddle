@@ -79,8 +79,13 @@ define(function(require) {
     // END PRIVATE FUNCTIONS
 
     // PUBLIC PRIVILEGED FUNCTIONS
+    // TODO: Refactor so that these methos are on the prototype, not the instance
+    this.is_trace_enabled = function() {
+      return this.log_level <= parse_level('trace'));
+    };
+
     this.trace = function(message) {
-      if(this.log_level <= parse_level('trace')) {
+      if(this.is_trace_enabled()) {
         var log_entry = assemble_log_entry(message, 'trace');
         _.each(this.appenders, function(appender) {
           appender.trace(log_entry);
@@ -88,8 +93,12 @@ define(function(require) {
       }
     };
 
+    this.is_debug_enabled = function() {
+      return this.log_level <= parse_level('debug'));
+    };
+
     this.debug = function(message) {
-      if(this.log_level <= parse_level('debug')) {
+      if(this.is_debug_enabled()) {
         var log_entry = assemble_log_entry(message, 'debug');
         _.each(this.appenders, function(appender) {
           appender.debug(log_entry);
@@ -97,8 +106,12 @@ define(function(require) {
       }
     };
 
+    this.is_info_enabled = function() {
+      return this.log_level <= parse_level('info'));
+    };
+
     this.info = function(message) {
-      if(this.log_level <= parse_level('info')) {
+      if(this.is_info_enabled()) {
         var log_entry = assemble_log_entry(message, 'info');
         _.each(this.appenders, function(appender) {
           appender.info(log_entry);
@@ -106,8 +119,12 @@ define(function(require) {
       }
     };
 
+    this.is_warn_enabled = function() {
+      return this.log_level <= parse_level('warn'));
+    };
+
     this.warn = function(message) {
-      if(this.log_level <= parse_level('warn')) {
+      if(this.is_warn_enabled()) {
         var log_entry = assemble_log_entry(message, 'warn');
         _.each(this.appenders, function(appender) {
           appender.warn(log_entry);
@@ -115,8 +132,12 @@ define(function(require) {
       }
     };
 
+    this.is_error_enabled = function() {
+      return this.log_level <= parse_level('error'));
+    };
+
     this.error = function(message) {
-      if(this.log_level <= parse_level('error')) {
+      if(this.is_error_enabled()) {
         var log_entry = assemble_log_entry(message, 'error');
         _.each(this.appenders, function(appender) {
           appender.error(log_entry);
@@ -124,8 +145,12 @@ define(function(require) {
       }
     };
 
+    this.is_fatal_enabled = function() {
+      return this.log_level <= parse_level('error'));
+    };
+
     this.fatal = function(message) {
-      if(this.log_level <= parse_level('fatal')) {
+      if(this.is_fatal_enabled()) {
         var log_entry = assemble_log_entry(message, 'fatal');
         _.each(this.appenders, function(appender) {
           appender.fatal(log_entry);
