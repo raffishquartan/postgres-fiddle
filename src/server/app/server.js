@@ -12,11 +12,12 @@ var path = require('path');
 
 var C = require('app/config');
 var L = require('app/util/logger');
+var logger = L.get_logger('app/server');
 
 process.on('uncaughtException', function(error) {
-  if(L && L.server && L.server.error) {
-    L.server.error('Uncaught exception, exiting: ' + error.name + ' ' + error.message);
-    L.server.error(error.stack);
+  if(logger) {
+    logger.error('Uncaught exception, exiting: ' + error.name + ' ' + error.message);
+    logger.error(error.stack);
   }
   else {
     console.error('BACKUP LOG TO CONSOLE IN CASE OF TOTAL SERVER/LOGGER FAILURE:\n' + error.stack);
@@ -25,12 +26,11 @@ process.on('uncaughtException', function(error) {
 });
 
 Error.stackTraceLimit = Infinity;
-L.configure();
 var app = express();
 configure_express_middleware(app);
 var http_server = http.createServer(app);
 http_server.listen(C.http_port, function() {
-  L.server.info('Express HTTP server listening on port %d', C.http_port);
+  logger.info('Express HTTP server listening on port %d', C.http_port);
 });
 
 
@@ -38,7 +38,7 @@ http_server.listen(C.http_port, function() {
 function configure_express_middleware(app) {
   app.use(compression());
   app.use(serve_favicon(path.join(C.client_root, 'assets', 'images', 'favicons', 'favicon.ico')));
-  app.use(log4js.connectLogger(L.express, { level: 'auto', layout: 'basic', format: C.express_logger_format }));
+  app.use(log4js.connectLogger(L.get_logger('express'), { level: 'auto', layout: 'basic', format: C.express_logger_format }));
   app.use(body_parser.json());
   app.use(body_parser.urlencoded({ extended: false }));
   app.use(method_override('X-HTTP-Method'));          // Microsoft
