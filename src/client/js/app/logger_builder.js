@@ -107,7 +107,7 @@ define(function(require) {
     };
 
     this.is_info_enabled = function() {
-      return this.log_level <= parse_level('info'));
+      return this.log_level <= parse_level('info');
     };
 
     this.info = function(message) {
@@ -177,7 +177,7 @@ define(function(require) {
    *
    * @param  {String} group_string The group string to specify, /-delimited and assumed to begin with js
    * @param  {Object} log_config   The logger configuration
-   * @return {Object}              A conf object with fields level and appenders
+   * @return {Object}              A conf object with fields log_level and appenders
    */
   var get_group_config_clone = function(group_string, log_config) {
     var group_elements = group_string.split('/');
@@ -195,7 +195,7 @@ define(function(require) {
       throw new Error('Group config for "' + group_string + '" is ' + current_level.conf);
     }
     else {
-      return $.extend(true, {}, current_level.conf); // TODO check this deep copies the appenders array as well
+      return $.extend(true, {}, current_level.conf); // TODO check this deep copies as expected
     }
   };
 
