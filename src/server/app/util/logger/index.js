@@ -10,6 +10,25 @@ var moment = require('moment');
 var log4js_loggers = {};
 
 /**
+ * Converts level string from logger config into numerical value. Valid strings (case insensitive) are: all. trace,
+ * debug, info, warn, error, fatal
+ */
+var parse_level = function(level_string) {
+  var levels = {
+    all:   0,
+    trace: 100,
+    debug: 200,
+    info:  300,
+    warn:  400,
+    error: 500,
+    fatal: 600,
+    off:   9999
+  };
+  if(levels[level_string.toLowerCase()] !== undefined) { return levels[level_string.toLowerCase()]; }
+  else { throw new Error('Unknown log level string: ' + level_string); }
+};
+
+/**
  * A logger object, associated with a group and with some set of appenders attached to it
  * @param {Object} options Required and possible properties are String:level Array[String]:appenders, String:group
  */
@@ -116,7 +135,7 @@ var Logger = function(options) {
   };
 
   this.is_fatal_enabled = function() {
-    return this.level <= parse_level('fatal')
+    return this.level <= parse_level('fatal');
   };
 
   this.fatal = function(message) {
@@ -142,25 +161,6 @@ var Logger = function(options) {
 };
 
 /**
- * Converts level string from logger config into numerical value. Valid strings (case insensitive) are: all. trace,
- * debug, info, warn, error, fatal
- */
-var parse_level = function(level_string) {
-  var levels = {
-    all:   0,
-    trace: 100,
-    debug: 200,
-    info:  300,
-    warn:  400,
-    error: 500,
-    fatal: 600,
-    off:   9999
-  };
-  if(levels[level_string.toLowerCase()] !== undefined) { return levels[level_string.toLowerCase()]; }
-  else { throw new Error('Unknown log level string: ' + level_string); }
-};
-
-/**
  * Checks if a logger configuration is valid or not
  * @param  {[type]} config_to_validate The configuration to validate
  * @return {boolean}                   True if the configuration is valid, false otherwise
@@ -170,7 +170,7 @@ var validate_config = function(config_to_validate) {
     console.log('Invalid configuration: no valid group in ' + JSON.stringify(config_to_validate));
     return false;
   }
-  else if(typeof(config_to_validate.level) !== "number") {
+  else if(typeof(config_to_validate.level) !== 'number') {
     console.log('Invalid configuration: level is not parsed to a number in ' + JSON.stringify(config_to_validate));
     return false;
   }
@@ -185,7 +185,7 @@ var validate_config = function(config_to_validate) {
   else {
     return true;
   }
-}
+};
 
 /**
  * Returns the most specific conf in log_config for a given group. Throws an error if no valid configuration is found.
@@ -277,7 +277,7 @@ module.exports = {
    */
   get_log4js_logger: function(logger_name) {
     if(!log4js_loggers[logger_name]) {
-      throw new Error("Unknown log4js logger_name - ensure appender with this category is in logger_config.json");
+      throw new Error('Unknown log4js logger_name - ensure appender with this category is in logger_config.json');
     }
     else {
       return log4js_loggers[logger_name];
