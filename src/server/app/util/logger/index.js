@@ -220,29 +220,27 @@ var get_group_config_clone = function(group_string, log_config) {
   }
 };
 
-var logger_config;
-var existing_loggers = {};
-
 /**
- * Loads and caches a log4js logger as a destination for each destgroup
- * @param  {string} logger_config_path Path to the logger config JSON file
- * @return {object}                    The logger configurations specified in the SL config
+ * Configures log4js according to its specific config, then creates and caches a log4js logger to log4js_loggers as a
+ * potential destination for each destgroup
+ * @param  {string} log4js_config Path to the logger config JSON file
  */
-var cache_appenders_return_loggers = function(logger_config_path) {
-  var raw_config = require(logger_config_path); // load config from JSON file
-  _.each(raw_config['log4js'].appenders, function(appender_obj) {
+var configure_log4js = function(log4js_config) {
+  _.each(log4js_config.appenders, function(appender_obj) { // ensure log4js does not modify log messages
     appender_obj.layout = {};
-    appender_obj.layout.type = "messagePassThrough";
+    appender_obj.layout.type = 'messagePassThrough';
   });
-  log4js.configure(raw_config['log4js']); // configure log4js appenders
-  _.each(raw_config['log4js'].appenders, function(appender_obj) { // create log4js loggers - one for each appender
+  log4js.configure(log4js_config); // configure log4js appenders
+  _.each(log4js_config.appenders, function(appender_obj) { // create log4js loggers - one for each appender
     if(!log4js_loggers[appender_obj.category]) {
       log4js_loggers[appender_obj.category] = log4js.getLogger(appender_obj.category);
-      log4js_loggers[appender_obj.category].setLevel('TRACE');
+      log4js_loggers[appender_obj.category].setLevel('TRACE'); // filter logging in this module, not in log4js
     }
   });
-  return raw_config.loggers // return loggers configuration
 };
+
+var raw_logger_config;
+var cached_loggers = {};
 
 module.exports = {
   /**
@@ -250,22 +248,21 @@ module.exports = {
    * @param  {string} group Get the logger for this group
    */
   get_logger: function(group) {
-    var logger_config;
-    if(!logger_config) {
-      logger_config = cache_appenders_return_loggers('app/util/logger/logger_config.json');
+    if(!raw_logger_config) {
+      raw_logger_config = require('app/util/logger/logger_config.json');
+      configure_log4j(raw_logger_config.log4js); // configure log4js, create appenders in cache for each appender
     }
-    if(existing_loggers[group]) {
-      return existing_loggers[group];
+    if(cached_loggers[group]) {
+      return cached_loggers[group];
     }
     else {
-      var logger_specific_config = get_group_config_clone(group, logger_config);
+      var logger_specific_config = get_group_config_clone(group, raw_logger_config.loggers);
       if(!validate_config(logger_specific_config)) {
         throw new Error('Invalid configuration for logger: ' + JSON.stringify(logger_specific_config));
       }
       else {
-        existing_loggers[group] = new Logger(logger_specific_config);
-        var util = require('util');
-        return existing_loggers[group];
+        cached_loggers[group] = new Logger(logger_specific_config);
+        return cached_loggers[group];
       }
     }
   },
