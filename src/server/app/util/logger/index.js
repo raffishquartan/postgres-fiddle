@@ -32,12 +32,12 @@ var Logger = function(options) {
   this.trace = function(message) {
     if(this.is_trace_enabled()) {
       var log_entry = assemble_log_entry(message, 'trace');
-      _.each(this.appenders, function(appender_name) {
-        if(!log4js_loggers[appender_name]) {
-          throw new Error('Unknown appender "' + appender_name + '" requested by ' + this.group);
+      _.each(this.destgroups, function(destgroup_name) {
+        if(!log4js_loggers[destgroup_name]) {
+          throw new Error('Unknown appender "' + destgroup_name + '" requested by ' + this.group);
         }
         else {
-          log4js_loggers[appender_name].trace(log_entry);
+          log4js_loggers[destgroup_name].trace(log_entry);
         }
       });
     }
@@ -50,12 +50,12 @@ var Logger = function(options) {
   this.debug = function(message) {
     if(this.is_debug_enabled()) {
       var log_entry = assemble_log_entry(message, 'debug');
-      _.each(this.appenders, function(appender_name) {
-        if(!log4js_loggers[appender_name]) {
-          throw new Error('Unknown appender "' + appender_name + '" requested by ' + this.group);
+      _.each(this.destgroups, function(destgroup_name) {
+        if(!log4js_loggers[destgroup_name]) {
+          throw new Error('Unknown appender "' + destgroup_name + '" requested by ' + this.group);
         }
         else {
-          log4js_loggers[appender_name].debug(log_entry);
+          log4js_loggers[destgroup_name].debug(log_entry);
         }
       });
     }
@@ -68,12 +68,12 @@ var Logger = function(options) {
   this.info = function(message) {
     if(this.is_info_enabled()) {
       var log_entry = assemble_log_entry(message, 'info');
-      _.each(this.appenders, function(appender_name) {
-        if(!log4js_loggers[appender_name]) {
-          throw new Error('Unknown appender "' + appender_name + '" requested by ' + this.group);
+      _.each(this.destgroups, function(destgroup_name) {
+        if(!log4js_loggers[destgroup_name]) {
+          throw new Error('Unknown appender "' + destgroup_name + '" requested by ' + this.group);
         }
         else {
-          log4js_loggers[appender_name].info(log_entry);
+          log4js_loggers[destgroup_name].info(log_entry);
         }
       });
     }
@@ -86,12 +86,12 @@ var Logger = function(options) {
   this.warn = function(message) {
     if(this.is_warn_enabled()) {
       var log_entry = assemble_log_entry(message, 'warn');
-      _.each(this.appenders, function(appender_name) {
-        if(!log4js_loggers[appender_name]) {
-          throw new Error('Unknown appender "' + appender_name + '" requested by ' + this.group);
+      _.each(this.destgroups, function(destgroup_name) {
+        if(!log4js_loggers[destgroup_name]) {
+          throw new Error('Unknown appender "' + destgroup_name + '" requested by ' + this.group);
         }
         else {
-          log4js_loggers[appender_name].warn(log_entry);
+          log4js_loggers[destgroup_name].warn(log_entry);
         }
       });
     }
@@ -104,12 +104,12 @@ var Logger = function(options) {
   this.error = function(message) {
     if(this.is_error_enabled()) {
       var log_entry = assemble_log_entry(message, 'error');
-      _.each(this.appenders, function(appender_name) {
-        if(!log4js_loggers[appender_name]) {
-          throw new Error('Unknown appender "' + appender_name + '" requested by ' + this.group);
+      _.each(this.destgroups, function(destgroup_name) {
+        if(!log4js_loggers[destgroup_name]) {
+          throw new Error('Unknown appender "' + destgroup_name + '" requested by ' + this.group);
         }
         else {
-          log4js_loggers[appender_name].error(log_entry);
+          log4js_loggers[destgroup_name].error(log_entry);
         }
       });
     }
@@ -122,12 +122,12 @@ var Logger = function(options) {
   this.fatal = function(message) {
     if(this.is_fatal_enabled()) {
       var log_entry = assemble_log_entry(message, 'fatal');
-      _.each(this.appenders, function(appender_name) {
-        if(!log4js_loggers[appender_name]) {
-          throw new Error('Unknown appender "' + appender_name + '" requested by ' + this.group);
+      _.each(this.destgroups, function(destgroup_name) {
+        if(!log4js_loggers[destgroup_name]) {
+          throw new Error('Unknown appender "' + destgroup_name + '" requested by ' + this.group);
         }
         else {
-          log4js_loggers[appender_name].fatal(log_entry);
+          log4js_loggers[destgroup_name].fatal(log_entry);
         }
       });
     }
@@ -229,14 +229,19 @@ var existing_loggers = {};
  * @return {object}                    The logger configurations specified in the SL config
  */
 var cache_appenders_return_loggers = function(logger_config_path) {
-  var raw_config = require(logger_config_path);
-  log4js.configure(raw_config['log4js']);
-  for(var appender in raw_config['log4js'].appenders) {
-    if(!log4js_loggers[appender]) {
-      log4js_loggers[appender] = log4js.getLogger(appender);
+  var raw_config = require(logger_config_path); // load config from JSON file
+  _.each(raw_config['log4js'].appenders, function(appender_obj) {
+    appender_obj.layout = {};
+    appender_obj.layout.type = "messagePassThrough";
+  });
+  log4js.configure(raw_config['log4js']); // configure log4js appenders
+  _.each(raw_config['log4js'].appenders, function(appender_obj) { // create log4js loggers - one for each appender
+    if(!log4js_loggers[appender_obj.category]) {
+      log4js_loggers[appender_obj.category] = log4js.getLogger(appender_obj.category);
+      log4js_loggers[appender_obj.category].setLevel('TRACE');
     }
-  }
-  return raw_config.loggers
+  });
+  return raw_config.loggers // return loggers configuration
 };
 
 module.exports = {
@@ -259,8 +264,23 @@ module.exports = {
       }
       else {
         existing_loggers[group] = new Logger(logger_specific_config);
+        var util = require('util');
         return existing_loggers[group];
       }
+    }
+  },
+
+  /**
+   * Get a plain log4js logger from the cache, possibly associated with one or more log4js appenders
+   * @param  {[type]} logger_name The logger name to get
+   * @return {[type]}             The log4js logger of this name
+   */
+  get_log4js_logger: function(logger_name) {
+    if(!log4js_loggers[logger_name]) {
+      throw new Error("Unknown log4js logger_name - ensure appender with this category is in logger_config.json");
+    }
+    else {
+      return log4js_loggers[logger_name];
     }
   }
 };

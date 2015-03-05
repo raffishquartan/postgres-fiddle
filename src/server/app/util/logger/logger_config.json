@@ -18,23 +18,18 @@
     }, {
       "category": "basic-appender",
       "type": "console"
-    }],
-
-    "levels": {
-      "express-appender": "info",
-      "basic-appender": "info"
-    }
+    }]
   },
   "loggers": {
     "app": {
       "conf": {
-        "level": "info",
+        "level": "trace",
         "destgroups": ["basic-appender"]
       }
     },
     "express": {
       "conf": {
-        "level": "info",
+        "level": "trace",
         "destgroups": ["express-appender", "basic-appender"]
       }
     }
