@@ -29,10 +29,10 @@ define(function(require) {
   };
 
   // Log all events at trace
-  PF.on('all', function(event_string)) {
+  PF.on('all', function(event_string) {
     var events_logger = PF.logger.get_logger('root/events_logger');
     events_logger.trace('PF.event -- events logger: ' + event_string);
-  }
+  });
 
   // Set application to start after initialisation
   PF.on('start', function(options) {
