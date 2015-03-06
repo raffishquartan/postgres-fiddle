@@ -1,22 +1,31 @@
 {
   "log4js": {
     "appenders": [{
-      "category": "express-appender",
+      "category": "connect-appender",
+      "type": "dateFile",
+      "filename": "logs/postgres-fiddle.requests.log",
+      "pattern": "-yyyy-MM-dd",
+      "alwaysIncludePattern": false
+    }, {
+      "category": "connect-appender",
       "type": "dateFile",
       "filename": "logs/postgres-fiddle.node.log",
       "pattern": "-yyyy-MM-dd",
       "alwaysIncludePattern": false
     }, {
-      "category": "express-appender",
-      "type": "console"
-    }, {
-      "category": "basic-appender",
+      "category": "node-appender",
       "type": "dateFile",
       "filename": "logs/postgres-fiddle.node.log",
       "pattern": "-yyyy-MM-dd",
       "alwaysIncludePattern": false
     }, {
-      "category": "basic-appender",
+      "category": "app-appender",
+      "type": "dateFile",
+      "filename": "logs/postgres-fiddle.app.log",
+      "pattern": "-yyyy-MM-dd",
+      "alwaysIncludePattern": false
+    }, {
+      "category": "app-appender",
       "type": "console"
     }]
   },
@@ -24,13 +33,7 @@
     "app": {
       "conf": {
         "level": "trace",
-        "destgroups": ["basic-appender"]
-      }
-    },
-    "express": {
-      "conf": {
-        "level": "trace",
-        "destgroups": ["express-appender", "basic-appender"]
+        "destgroups": ["node-appender", "app-appender"]
       }
     }
   }
