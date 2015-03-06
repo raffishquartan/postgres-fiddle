@@ -38,7 +38,7 @@ http_server.listen(C.http_port, function() {
 function configure_express_middleware(app) {
   app.use(compression());
   app.use(serve_favicon(path.join(C.client_root, 'assets', 'images', 'favicons', 'favicon.ico')));
-  app.use(log4js.connectLogger(L.get_log4js_logger('express-appender'),
+  app.use(log4js.connectLogger(L.get_log4js_logger('connect-appender'),
     { level: 'auto', layout: 'basic', immediate: true, format: C.logger.express_format }));
   app.use(body_parser.json());
   app.use(body_parser.urlencoded({ extended: false }));
