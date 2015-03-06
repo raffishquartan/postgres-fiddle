@@ -250,7 +250,7 @@ module.exports = {
   get_logger: function(group) {
     if(!raw_logger_config) {
       raw_logger_config = require('app/util/logger/logger_config.json');
-      configure_log4j(raw_logger_config.log4js); // configure log4js, create appenders in cache for each appender
+      configure_log4js(raw_logger_config.log4js); // configure log4js, create appenders in cache for each appender
     }
     if(cached_loggers[group]) {
       return cached_loggers[group];
