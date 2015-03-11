@@ -1,7 +1,9 @@
 'use strict';
 
-function get_entry_json(req, res) {
-  res.status(200).send('{ foo: "bar" }');
+var logger_module = require('app/util/logger');
+
+function get_entry_json(req, res, next) {
+  res.status(200).send('{ tag: "' + req.params.tag_string + '" }');
 }
 
 var express = require('express');
