@@ -13,4 +13,4 @@ module.exports = {
   },
   */
   express_format: '[:date] :remote-addr ":method :url HTTP/:http-version" :status ":referrer" ":user-agent"'
-}
+};
