@@ -37,7 +37,7 @@ module.exports = function(grunt) {
                 options: {
                     reporter: 'spec',
                     clearRequireCache: true,
-                    require: 'test/blanket'
+                    require: 'src/test/blanket'
                 },
                 src: [
                     './**/*_mtest.js',
