@@ -44,9 +44,9 @@ describe('exported functions - util', function() {
     var name = 'app/util/logger/index';
     var module = require(name);
     f_exported_cnt[name] = 0;
-    module.get_logger.should.be.a.function;
+    module.get.should.be.a.function;
     f_exported_cnt[name]++;
-    module.get_log4js_logger.should.be.a.function;
+    module.get_log4js.should.be.a.function;
     f_exported_cnt[name]++;
   });
 

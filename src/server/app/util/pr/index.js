@@ -5,7 +5,7 @@ var path = require('path');
 var Sequelize = require('sequelize');
 
 var logger_module = require('app/util/logger');
-var logger = logger_module.get_logger('app/util/pr/index');
+var logger = logger_module.get('app/util/pr/index');
 var database_config = require('app/config/database');
 
 var sq = new Sequelize(database_config.name, database_config.user, database_config.password, {

@@ -247,7 +247,7 @@ module.exports = {
    * Returns a logger object. Also loads logger and caches log4js loggers (one or more per destgroup category) as nec.
    * @param  {string} group Get the logger for this group
    */
-  get_logger: function(group) {
+  get: function(group) {
     if(!raw_logger_config) {
       raw_logger_config = require('app/util/logger/logger_config.json');
       configure_log4js(raw_logger_config.log4js); // configure log4js, create appenders in cache for each appender
@@ -272,7 +272,7 @@ module.exports = {
    * @param  {[type]} logger_name The logger name to get
    * @return {[type]}             The log4js logger of this name
    */
-  get_log4js_logger: function(logger_name) {
+  get_log4js: function(logger_name) {
     if(!log4js_loggers[logger_name]) {
       throw new Error('Unknown log4js logger_name - ensure appender with this category is in logger_config.json');
     }

@@ -12,7 +12,7 @@ var path = require('path');
 
 var server_config = require('app/config/server');
 var logger_module = require('app/util/logger');
-var logger = logger_module.get_logger('app/server');
+var logger = logger_module.get('app/server');
 
 process.on('uncaughtException', function(error) {
   if(logger) {
@@ -40,7 +40,7 @@ function configure_express_middleware(app) {
 
   app.use(compression());
   app.use(serve_favicon(path.join(server_config.client_root, 'assets', 'images', 'favicons', 'favicon.ico')));
-  app.use(log4js.connectLogger(logger_module.get_log4js_logger('connect-appender'),
+  app.use(log4js.connectLogger(logger_module.get_log4js('connect-appender'),
     { level: 'auto', layout: 'basic', immediate: true, format: logger_config.express_format }));
   app.use(body_parser.json());
   app.use(body_parser.urlencoded({ extended: false }));
