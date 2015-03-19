@@ -12,6 +12,6 @@
   "exec_mode":        "cluster_mode",
   "instances":        1,
 
-  "script":           "app/server.js",
+  "script":           "server/app/server.js",
   "args":             "[]"
 }
