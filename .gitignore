@@ -5,4 +5,4 @@
 build
 test/out
 *.sublime-workspace
-
+logs
