@@ -22,10 +22,15 @@ var walk_sync = function(dir, filelist) {
 };
 
 // Requires a trailing slash on the dir argument because walk_sync does
-var js_files_in_dir = function(dir) {
+var js_application_files_in_dir = function(dir) {
   return walk_sync(dir).filter(function(filename) {
-    return /\.js$/.test(filename);
+    return /\.js$/.test(filename) && !/_itest\.js$/.test(filename) && !/_utest\.js$/.test(filename);
   });
+};
+
+// Requires a trailing slash on the dir argument because js_application_files_in_dir and walk_sync does
+var num_files_in_dirtree = function(dir) {
+  return js_application_files_in_dir(dir).length;
 };
 
 describe('requires', function() {
@@ -36,74 +41,71 @@ describe('requires', function() {
   });
 
   describe('api', function() {
-    var api_tests_executed = 0;
+    var tests_executed = 0;
 
     it('app/api/entry/router', function() {
-      api_tests_executed++;
+      tests_executed++;
       var result = require('app/api/entry/router');
       result.should.not.be.undefined;
     });
 
     // This test must be last in its suite
     it('all api js files should be tested', function() {
-      var api_js_files = js_files_in_dir('./src/server/app/api/');
-      api_tests_executed.should.equal(api_js_files.length);
+      tests_executed.should.equal(num_files_in_dirtree('./src/server/app/api/'));
     });
   });
 
   describe('config', function() {
-    var config_tests_executed = 0;
+    var tests_executed = 0;
 
     it('app/config/database', function() {
-      config_tests_executed++;
+      tests_executed++;
       var result = require('app/config/database');
       result.should.not.be.undefined;
     });
 
     it('app/config/logger', function() {
-      config_tests_executed++;
-      var result = require('app/config/database');
+      tests_executed++;
+      var result = require('app/config/logger');
       result.should.not.be.undefined;
     });
 
     it('app/config/server', function() {
-      config_tests_executed++;
-      var result = require('app/config/database');
+      tests_executed++;
+      var result = require('app/config/server');
       result.should.not.be.undefined;
     });
 
     // This test must be last in its suite
     it('all config js files should be tested', function() {
-      var config_js_files = js_files_in_dir('./src/server/app/config/');
-      config_tests_executed.should.equal(config_js_files.length);
+      tests_executed.should.equal(num_files_in_dirtree('./src/server/app/config/'));
     });
   });
 
   describe('util', function() {
-    var config_tests_executed = 0;
+    var tests_executed = 0;
 
     it('app/util/logger', function() {
-      config_tests_executed++;
+      tests_executed++;
       var result = require('app/util/logger');
       result.should.not.be.undefined;
     });
 
     it('app/util/pr', function() {
-      config_tests_executed++;
+      tests_executed++;
       var result = require('app/util/pr');
       result.should.not.be.undefined;
     });
 
     it('app/util/pr/entry', function() {
-      config_tests_executed++;
+      tests_executed++;
       var result = require('app/util/pr/entry');
       result.should.not.be.undefined;
     });
 
     // This test must be last in its suite
     it('all util js files should be tested', function() {
-      var config_js_files = js_files_in_dir('./src/server/app/util/');
-      config_tests_executed.should.equal(config_js_files.length);
+      tests_executed.should.equal(num_files_in_dirtree('./src/server/app/util/'));
     });
   });
 });
