@@ -53,7 +53,6 @@ describe('exported functions - util', function() {
   /** Sequelize object has .sq object field for Sequelize and a .pr object field for all the models - no funcs */
   it('app/util/pr/index', function() {
     var name = 'app/util/pr/index';
-    var module = require(name);
     f_exported_cnt[name] = 0;
   });
 
@@ -61,18 +60,16 @@ describe('exported functions - util', function() {
   /** Sequelize model module export is a function, not an object with functions - rely on Sequelize tests - no funcs */
   it('app/util/pr/entry', function() {
     var name = 'app/util/pr/entry';
-    var module = require(name);
     f_exported_cnt[name] = 0;
   });
 
   // This test must be last in its suite
-  it('exports the expected functions', function() {
+  it('tests check for all expected exported functions', function() {
     var js_files = js_application_files_in_dir('./src/server/app/util/').filter(function(filename) {
       return !/.*\/router.js/.test(filename);
     });
     js_files.forEach(function(js_file) {
       var req_path = js_file.replace(/\.\/src\/server\//, '').replace(/\.js$/, '');
-      var module = require(req_path);
       should(f_exported_cnt[req_path]).not.be.type('undefined', req_path + ' exports not checked') &&
         f_exported_cnt[req_path].should.equal(num_module_func(req_path),
           req_path + ' only ' + f_exported_cnt[req_path] + ' of ' + num_module_func(req_path) + ' functions checked');
