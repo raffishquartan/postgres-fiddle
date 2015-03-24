@@ -71,7 +71,7 @@ function get_entry(req, res, next) {
   else {
     pr.pr.entry.entry.findAll({ include: [{model: pr.pr.entry.tag }]})
     .then(function(entry_instances) {
-      res.status(200).send(_.map(entry_instances, function(entry) { return entry.get({ plain: true }) }));
+      res.status(200).send(_.map(entry_instances, function(entry) { return entry.get({ plain: true }); }));
     })
     .done();
   }
@@ -83,7 +83,7 @@ function get_entry(req, res, next) {
 function get_tags(req, res, next) {
   pr.pr.entry.tag.findAll()
   .then(function(tag_instances) {
-    res.status(200).send(_.map(tag_instances, function(tag) { return tag.get({ plain: true}) }));
+    res.status(200).send(_.map(tag_instances, function(tag) { return tag.get({ plain: true}); }));
   });
 }
 
