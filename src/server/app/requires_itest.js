@@ -5,33 +5,7 @@
 
 require('should');
 
-// https://gist.github.com/kethinov/6658166 - requires a trailing slash on the dir argument
-var walk_sync = function(dir, filelist) {
-  var fs = fs || require('fs'),
-      files = fs.readdirSync(dir);
-  filelist = filelist || [];
-  files.forEach(function(file) {
-    if (fs.statSync(dir + file).isDirectory()) {
-      filelist = walk_sync(dir + file + '/', filelist);
-    }
-    else {
-      filelist.push(file);
-    }
-  });
-  return filelist;
-};
-
-// Requires a trailing slash on the dir argument because walk_sync does
-var js_application_files_in_dir = function(dir) {
-  return walk_sync(dir).filter(function(filename) {
-    return /\.js$/.test(filename) && !/_itest\.js$/.test(filename) && !/_utest\.js$/.test(filename);
-  });
-};
-
-// Requires a trailing slash on the dir argument because js_application_files_in_dir and walk_sync does
-var num_files_in_dirtree = function(dir) {
-  return js_application_files_in_dir(dir).length;
-};
+var test_lib = require('test/lib');
 
 describe('requires', function() {
   it('failed requires should throw errors', function() {
@@ -51,7 +25,7 @@ describe('requires', function() {
 
     // This test must be last in its suite
     it('all api js files should be tested', function() {
-      tests_executed.should.equal(num_files_in_dirtree('./src/server/app/api/'));
+      tests_executed.should.equal(test_lib.num_files_in_dirtree('./src/server/app/api/'));
     });
   });
 
@@ -78,7 +52,7 @@ describe('requires', function() {
 
     // This test must be last in its suite
     it('all config js files should be tested', function() {
-      tests_executed.should.equal(num_files_in_dirtree('./src/server/app/config/'));
+      tests_executed.should.equal(test_lib.num_files_in_dirtree('./src/server/app/config/'));
     });
   });
 
@@ -105,7 +79,7 @@ describe('requires', function() {
 
     // This test must be last in its suite
     it('all util js files should be tested', function() {
-      tests_executed.should.equal(num_files_in_dirtree('./src/server/app/util/'));
+      tests_executed.should.equal(test_lib.num_files_in_dirtree('./src/server/app/util/'));
     });
   });
 });
