@@ -4,34 +4,8 @@
 'use strict';
 
 var should = require('should');
-var _ = require('underscore');
 
-// https://gist.github.com/kethinov/6658166 - requires a trailing slash on the dir argument
-var walk_sync_path = function(dir, filelist) {
-  var fs = fs || require('fs'),
-      files = fs.readdirSync(dir);
-  filelist = filelist || [];
-  files.forEach(function(file) {
-    if (fs.statSync(dir + file).isDirectory()) {
-      filelist = walk_sync_path(dir + file + '/', filelist);
-    }
-    else {
-      filelist.push(dir + file);
-    }
-  });
-  return filelist;
-};
-
-// Requires a trailing slash on the dir argument because walk_sync does
-var js_application_files_in_dir = function(dir) {
-  return walk_sync_path(dir).filter(function(filename) {
-    return /\.js$/.test(filename) && !/_itest\.js$/.test(filename) && !/_utest\.js$/.test(filename);
-  });
-};
-
-var num_module_func = function(require_path) {
-  return _.functions(require(require_path)).length;
-};
+var test_lib = require('test/lib');
 
 describe('exported functions - util', function() {
   /**
@@ -65,14 +39,14 @@ describe('exported functions - util', function() {
 
   // This test must be last in its suite
   it('tests check for all expected exported functions', function() {
-    var js_files = js_application_files_in_dir('./src/server/app/util/').filter(function(filename) {
+    var js_files = test_lib.js_application_files_in_dir_path('./src/server/app/util/').filter(function(filename) {
       return !/.*\/router.js/.test(filename);
     });
     js_files.forEach(function(js_file) {
       var req_path = js_file.replace(/\.\/src\/server\//, '').replace(/\.js$/, '');
       should(f_exported_cnt[req_path]).not.be.type('undefined', req_path + ' exports not checked') &&
-        f_exported_cnt[req_path].should.equal(num_module_func(req_path),
-          req_path + ' only ' + f_exported_cnt[req_path] + ' of ' + num_module_func(req_path) + ' functions checked');
+        f_exported_cnt[req_path].should.equal(test_lib.num_module_func(req_path),
+          req_path + ' only ' + f_exported_cnt[req_path] + ' of ' + test_lib.num_module_func(req_path) + ' functions checked');
     });
   });
 });
