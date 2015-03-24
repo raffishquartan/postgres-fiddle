@@ -16,7 +16,6 @@ module.exports = function(sequelize, DataTypes) {
         allowNull: false,
         validate: {
           isDate: true,
-          notNull: true
         }
       },
       body: {
@@ -24,7 +23,6 @@ module.exports = function(sequelize, DataTypes) {
         allowNull: false,
         validate: {
           notEmpty: true,
-          notNull: true
         }
       }
     }, {
@@ -45,7 +43,6 @@ module.exports = function(sequelize, DataTypes) {
         allowNull: false,
         unique: true,
         validate: {
-          notNull: true
         }
       }
     }, {
