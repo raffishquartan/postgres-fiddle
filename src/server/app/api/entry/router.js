@@ -1,5 +1,6 @@
 'use strict';
 
+var _ = require('underscore');
 var q = require('q');
 
 var pr = require('app/util/pr');
@@ -36,7 +37,8 @@ pr.sq.sync({ force: true })
     })
   ]);
   return q.all([hard_coded_tag_promises, hard_coded_entry_promises]);
-}).spread(function(hard_coded_tags, hard_coded_entries) {
+})
+.spread(function(hard_coded_tags, hard_coded_entries) {
   return q.all([
     hard_coded_entries[0].setTags([hard_coded_tags[0], hard_coded_tags[1]]),
     hard_coded_entries[1].setTags([hard_coded_tags[2]]),
@@ -45,7 +47,33 @@ pr.sq.sync({ force: true })
     hard_coded_entries[4].setTags([hard_coded_tags[1]]),
     hard_coded_entries[5].setTags([hard_coded_tags[0], hard_coded_tags[1], hard_coded_tags[2]])
   ]);
-}).done();
+})
+.then(function() {
+  pr.pr.entry.tag.find({
+    where: { value: 'foo' },
+    include: [{ model: pr.pr.entry.entry, include: [{ model: pr.pr.entry.tag }] }]
+  })
+  .then(function(tag) {
+    console.log('\n\n\n\nTAG OBJECT:');
+    console.log(tag.get({ plain: true }));
+    console.log('\n\n\n\nTAGS OF MODELS:');
+    _.map(tag.entries, function(entry) {
+      _.map(entry.tags, function(tag) {
+        console.log(tag.get({plain:true}))
+      });
+      console.log('\n');
+    });
+    tag.getEntries()
+    .then(function(entries) {
+      var _ = require('underscore');
+      console.log('\n\n\n\n\nENTRIES WITH TAG FOO');
+      console.log(_.map(entries, function(entry) { return entry.get({plain : true}); }));
+    })
+    .done();
+  })
+  .done();
+})
+.done();
 
 
 /**
