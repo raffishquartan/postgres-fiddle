@@ -1,41 +1,52 @@
 'use strict';
 
-//var pr = require('app/util/pr');
+var q = require('q');
+
+var pr = require('app/util/pr');
 var logger_module = require('app/util/logger');
 var logger = logger_module.get('app/api/entry/router');
 
-var hard_coded_tags = ['foo', 'bar', 'baz'];
-var hard_coded_entries = [{
-  id: '0',
-  body: 'This is entry 0. Here is some text.',
-  date: new Date(2015, 2, 10),
-  tags: ['foo', 'bar']
-}, {
-  id: '1',
-  body: 'This is entry one. Here is some more text.',
-  date: new Date(2015, 2, 10),
-  tags: ['baz']
-}, {
-  id: '2',
-  body: 'This is entry tertius III. Here is interesting text.',
-  date: new Date(2015, 2, 12),
-  tags: ['bar', 'baz']
-}, {
-  id: '3',
-  body: 'this is entry iv i dont know punctuation',
-  date: new Date(2015, 2, 11),
-  tags: ['foo']
-}, {
-  id: '4',
-  body: 'This is entry si4 with id 5 and a fullstop.',
-  date: new Date(2015, 2, 13),
-  tags: ['bar']
-}, {
-  id: '5',
-  body: 'This is entry hex. Should I be a magical curse?',
-  date: new Date(2015, 2, 14),
-  tags: ['foo', 'bar', 'baz']
-}];
+pr.sq.sync({ force: true })
+.then(function() {
+  var hard_coded_tag_promises = q.all([
+    pr.pr.entry.tag.create({value: 'foo'}),
+    pr.pr.entry.tag.create({value: 'bar'}),
+    pr.pr.entry.tag.create({value: 'baz'})
+  ]);
+
+  var hard_coded_entry_promises = q.all([
+    pr.pr.entry.entry.create({
+      body: 'This is entry 0. Here is some text.',
+      date: new Date(2015, 2, 10)
+    }), pr.pr.entry.entry.create({
+      body: 'This is entry one. Here is some more text.',
+      date: new Date(2015, 2, 10)
+    }), pr.pr.entry.entry.create({
+      body: 'This is entry tertius III. Here is interesting text.',
+      date: new Date(2015, 2, 12)
+    }), pr.pr.entry.entry.create({
+      body: 'this is entry iv i dont know punctuation',
+      date: new Date(2015, 2, 11)
+    }), pr.pr.entry.entry.create({
+      body: 'This is entry si4 with id 5 and a fullstop.',
+      date: new Date(2015, 2, 13)
+    }), pr.pr.entry.entry.create({
+      body: 'This is entry hex. Should I be a magical curse?',
+      date: new Date(2015, 2, 14)
+    })
+  ]);
+  return q.all([hard_coded_tag_promises, hard_coded_entry_promises]);
+}).spread(function(hard_coded_tags, hard_coded_entries) {
+  return q.all([
+    hard_coded_entries[0].setTags([hard_coded_tags[0], hard_coded_tags[1]]),
+    hard_coded_entries[1].setTags([hard_coded_tags[2]]),
+    hard_coded_entries[2].setTags([hard_coded_tags[1], hard_coded_tags[2]]),
+    hard_coded_entries[3].setTags([hard_coded_tags[0]]),
+    hard_coded_entries[4].setTags([hard_coded_tags[1]]),
+    hard_coded_entries[5].setTags([hard_coded_tags[0], hard_coded_tags[1], hard_coded_tags[2]])
+  ]);
+}).done();
+
 
 /**
  * Returns JSON for all entries which match an (optional) tag string
