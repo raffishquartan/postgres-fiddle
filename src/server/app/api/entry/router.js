@@ -57,12 +57,23 @@ pr.sq.sync({ force: true })
 function get_entry(req, res, next) {
   logger.trace('get_entry - stub message');
   if(req.params.tag_string) {
-    res.status(200).send(hard_coded_entries.filter(function(entry) {
-      return entry.tags.indexOf(req.params.tag_string) !== -1;
-    }));
+    pr.pr.entry.tag.find({
+      where: { value: req.params.tag_string },
+      include: [{ model: pr.pr.entry.entry, include: [pr.pr.entry.tag] }]
+    })
+    .then(function(tag) {
+      res.status(200).send(_.map(tag.entries, function(entry) {
+        return entry.get({ plain: true});
+      }));
+    })
+    .done();
   }
   else {
-    res.status(200).send(hard_coded_entries);
+    pr.pr.entry.entry.findAll({ include: [{model: pr.pr.entry.tag }]})
+    .then(function(entry_instances) {
+      res.status(200).send(_.map(entry_instances, function(entry) { return entry.get({ plain: true }) }));
+    })
+    .done();
   }
 }
 
@@ -70,8 +81,10 @@ function get_entry(req, res, next) {
  * Returns JSON for all tags
  */
 function get_tags(req, res, next) {
-  logger.trace('get_tags - stub message');
-  res.status(200).send(hard_coded_tags);
+  pr.pr.entry.tag.findAll()
+  .then(function(tag_instances) {
+    res.status(200).send(_.map(tag_instances, function(tag) { return tag.get({ plain: true}) }));
+  });
 }
 
 var express = require('express');
