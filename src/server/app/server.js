@@ -47,7 +47,7 @@ function configure_express_middleware(app) {
   app.use(method_override('X-HTTP-Method'));          // Microsoft
   app.use(method_override('X-HTTP-Method-Override')); // Google/GData
   app.use(method_override('X-Method-Override'));      // IBM
-  app.use('/api', require('app/api/entry/router'));
+  app.use('/api', require('app/api/router'));
   app.use('/assets', express.static(path.join(server_config.client_root, 'assets')));
   app.use('/bower_components', express.static(path.join(server_config.client_root, 'bower_components')));
   app.use('/js', express.static(path.join(server_config.client_root, 'js')));
