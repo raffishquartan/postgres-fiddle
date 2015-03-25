@@ -1,12 +1,13 @@
 'use strict';
 
 var _ = require('underscore');
-var q = require('q');
 
 var pr = require('app/util/pr');
 var logger_module = require('app/util/logger');
 var logger = logger_module.get('app/api/entry/router');
 
+/*
+var q = require('q');
 pr.sq.sync({ force: true })
 .then(function() {
   var hard_coded_tag_promises = q.all([
@@ -49,7 +50,7 @@ pr.sq.sync({ force: true })
   ]);
 })
 .done();
-
+*/
 
 /**
  * Returns JSON for all entries which match an (optional) tag string
