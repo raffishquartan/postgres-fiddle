@@ -31,7 +31,7 @@ describe('requires', function() {
 
     // This test must be last in its suite
     it('all api js files should be tested', function() {
-      tests_executed.should.equal(test_lib.num_files_in_dirtree('./src/server/app/api/'));
+      tests_executed.should.equal(test_lib.js_app_files_in_dir('./src/server/app/api/').length);
     });
   });
 
@@ -58,7 +58,7 @@ describe('requires', function() {
 
     // This test must be last in its suite
     it('all config js files should be tested', function() {
-      tests_executed.should.equal(test_lib.num_files_in_dirtree('./src/server/app/config/'));
+      tests_executed.should.equal(test_lib.js_app_files_in_dir('./src/server/app/config/').length);
     });
   });
 
@@ -85,7 +85,7 @@ describe('requires', function() {
 
     // This test must be last in its suite
     it('all util js files should be tested', function() {
-      tests_executed.should.equal(test_lib.num_files_in_dirtree('./src/server/app/util/'));
+      tests_executed.should.equal(test_lib.js_app_files_in_dir('./src/server/app/util/').length);
     });
   });
 });
