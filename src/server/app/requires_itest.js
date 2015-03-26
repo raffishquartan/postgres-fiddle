@@ -29,6 +29,12 @@ describe('requires', function() {
       result.should.not.be.undefined;
     });
 
+    it('app/api/entry/router_impl', function() {
+      tests_executed++;
+      var result = require('app/api/entry/router_impl');
+      result.should.not.be.undefined;
+    });
+
     // This test must be last in its suite
     it('all api js files should be tested', function() {
       tests_executed.should.equal(test_lib.js_app_files_in_dir('./src/server/app/api/').length);
