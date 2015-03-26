@@ -7,7 +7,7 @@ var should = require('should');
 
 var test_lib = require('test/lib');
 
-describe('exported functions - util', function() {
+describe('app/util - exported functions', function() {
   /**
    * Map of module name to the number of functions that module exports
    * @type {Object}
