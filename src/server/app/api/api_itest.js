@@ -14,6 +14,16 @@ describe('app/api - exported functions', function() {
    */
   var num_funcs = {};
 
+  it('app/api/entry/router_impl', function() {
+    var name = 'app/api/entry/router_impl';
+    var module = require(name);
+    num_funcs[name] = 0;
+    module.get_entries.should.be.a.function;
+    num_funcs[name]++;
+    module.get_tags.should.be.a.function;
+    num_funcs[name]++;
+  });
+
   // This test must be last in its suite
   it('tests check for all expected exported functions', function() {
     var js_files = test_lib.js_app_files_in_dir('./src/server/app/api/').filter(function(filename) {
