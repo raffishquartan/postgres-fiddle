@@ -8,5 +8,6 @@ var path = require('path');
 module.exports = {
   http_port: 27973,
   server_root: __dirname,
-  client_root: path.join(__dirname, '..', '..', '..', 'client') // .. x3 to cancel out server/app/config
+  client_root: path.join(__dirname, '..', '..', '..', 'client'), // .. x3 to cancel out server/app/config
+  q_longStackSupport: false
 };
