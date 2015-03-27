@@ -9,6 +9,7 @@ var method_override = require('method-override');
 var errorhandler = require('errorhandler');
 var log4js = require('log4js');
 var path = require('path');
+var q = require('q');
 
 var server_config = require('app/config/server');
 var logger_module = require('app/util/logger');
@@ -26,6 +27,7 @@ process.on('uncaughtException', function(error) {
 });
 
 Error.stackTraceLimit = Infinity;
+q.longStackSupport = server_config.q_longStackSupport;
 var app = express();
 configure_express_middleware(app);
 var http_server = http.createServer(app);
