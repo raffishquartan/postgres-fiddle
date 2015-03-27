@@ -2,6 +2,7 @@
 
 var _ = require('underscore');
 var glob = require('glob');
+var sinon = require('sinon');
 
 var is_application_file = function(filename) {
   return !/.*_itest\.js/.test(filename) && !/.*_utest\.js/.test(filename);
@@ -18,6 +19,11 @@ module.exports = {
     return glob.sync(dir + '/**/*.js').filter(is_application_file);
   },
 
+  /**
+   * Returns the number of functions exported by a module
+   * @param  {String} require_path The path to the module for require
+   * @return {Number}              The number of functions
+   */
   num_func_in_module: function(require_path) {
     return _.functions(require(require_path)).length;
   }
