@@ -26,5 +26,18 @@ module.exports = {
    */
   num_func_in_module: function(require_path) {
     return _.functions(require(require_path)).length;
+  },
+
+  /**
+   * Returns a sinon stub that returns a mock promise whose `then` function that ignores the any function
+   * passed to it and instead immediately returns a stub object with a `done` spy. This means that
+   * functions inside then callbacks will not be called. The mock promise, then and done functions are
+   * all Sinon spies.
+   *
+   * @return {Object} A mock promise that allows `{returnedObject}(arguments).then(function).done()`
+   */
+  stub_then_done: function() {
+    var mock_then_done_promise = { then: sinon.spy(function() { return { done: sinon.spy() }; }) };
+    return sinon.spy(function() { return mock_then_done_promise; });
   }
 };
