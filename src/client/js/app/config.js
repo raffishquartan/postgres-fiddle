@@ -21,6 +21,12 @@ define(function(require) {
                 level: 'trace',
                 appenders: ['console']
               }
+            },
+            entry: {
+              conf: {
+                level: 'trace',
+                appenders: ['console']
+              }
             }
           }
         },
