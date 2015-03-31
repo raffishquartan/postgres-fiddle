@@ -37,8 +37,9 @@ require([
   'js/apps/footer/footer_app',
   'js/apps/header/header_app',
   'js/apps/home/home_app',
-  'js/apps/about/about_app'
-], function(RequireConfig, PF){
+  'js/apps/about/about_app',
+  'js/apps/entry/entry_app'
+], function(PF){
   'use strict';
 
   var logger = PF.logger.get_logger('root/js/main');
