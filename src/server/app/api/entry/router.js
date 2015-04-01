@@ -21,6 +21,6 @@ function inject_pr(route_impl_func, pr) {
 var express = require('express');
 var router = new express.Router();
 router.get('/entry/:tag_string?', inject_pr(router_impl.get_entries, pr));
-router.get('/tags', inject_pr(router_impl.get_tags, pr));
+router.get('/tag', inject_pr(router_impl.get_tags, pr));
 
 module.exports = router;

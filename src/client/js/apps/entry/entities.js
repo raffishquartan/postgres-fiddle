@@ -9,20 +9,23 @@ define(function(require) {
     require('js/common/entities');
 
     Entities.Entry = PF.Entities.PFDatabaseModel.extend({
-
+      urlRoot: '/api/entry/entry'
     });
 
     Entities.EntryCollection = PF.Entities.PFDatabaseCollection.extend({
+      url: '/api/entry/entry',
       model: Entities.Entry
     });
 
     Entities.Tag = PF.Entities.PFDatabaseModel.extend({
+      urlRoot: '/api/entry/tag',
       initialize: function() {
         _.extend(this, new Backbone.Picky.Selectable(this));
       }
     });
 
     Entities.TagCollection = PF.Entities.PFDatabaseCollection.extend({
+      url: '/api/entry/tag',
       model: Entities.Tag,
 
       initialize: function() {
@@ -30,47 +33,38 @@ define(function(require) {
       }
     });
 
-    var initialize_entries = function() {
-      Entities.entry_collection - new Entities.EntryCollection([
-        { field: 1, other_field: 2, etc: 'foo' },
-        { field: 1, other_field: 2, etc: 'foo' }
-      ]);
-    };
-
-    var initialize_tags = function() {
-      Entities.tag_collection - new Entities.TagCollection([
-        { field: 1, other_field: 2, etc: 'foo' },
-        { field: 1, other_field: 2, etc: 'foo' }
-      ]);
-    };
-
     var API = {
-      get_entry_promise: function() {
+      // TODO: Use tag_string to filter returned entries when fetching from DB
+      get_entries_promise: function(tag_string) {
+        logger.trace('API.get_entries_promise -- enter');
         var deferred = q.defer();
-        if(Entities.tag_collection === undefined) {
-          initialize_entries();
-        }
-        deferred.resolve(Entities.entry_collection);
+        var entry_collection = new Entities.EntryCollection();
+        entry_collection.fetch({
+          success: function(entry_collection) { deferred.resolve(entry_collection); },
+          error: function() { deferred.resolve(undefined); }
+        });
         return deferred.promise;
       },
 
-      get_tag_promise: function() {
+      get_tags_promise: function() {
+        logger.trace('API.get_tags_promise -- enter');
         var deferred = q.defer();
-        if(Entities.tag_collection === undefined) {
-          initialize_tags();
-        }
-        deferred.resolve(Entities.tag_collection);
+        var tag_collection = new Entities.TagCollection();
+        tag_collection.fetch({
+          success: function(tag_collection) { deferred.resolve(tag_collection); },
+          error: function() { deferred.resolve(undefined); }
+        });
         return deferred.promise;
       }
     };
 
-    PF.reqres.setHandler('entryapp:entities:entries', function() {
-      return API.get_entry_promise();
+    PF.reqres.setHandler('entryapp:entities:entries', function(tag_string) {
+      return API.get_entries_promise(tag_string);
     });
 
     PF.reqres.setHandler('entryapp:entities:tags', function() {
-      return API.get_tag_promise();
-    })
+      return API.get_tags_promise();
+    });
   });
 
   return undefined;

@@ -14,19 +14,19 @@ define(function(require) {
     });
 
     var API = {
-      show_list: function() {
-        logger.trace('API.show_list -- enter');
+      show_list: function(tag_string) {
+        logger.trace('API.show_list -- enter - tag_string: ' + tag_string);
         var controller = require('js/apps/entry/list/controller');
-        controller.show_list();
+        controller.show_list(tag_string);
         PF.execute('headerapp:set_active_navitem', 'entry');
         logger.trace('API.show_list -- exit');
       },
     };
 
-    PF.on('entry:list', function() {
-      logger.trace('PF.event - entry:list -- enter');
+    PF.on('entry:list', function(tag_string) {
+      logger.trace('PF.event - entry:list -- enter - tag_string: ' + tag_string);
       PF.navigate('entry');
-      API.show_list();
+      API.show_list(tag_string);
       logger.trace('PF.event - entry:list -- exit');
     });
 
