@@ -26,7 +26,18 @@ define(function(require) {
             PF.trigger('entry:list', args.model.get('value'));
           });
 
-          var entries_view = new Views.Entries({ collection: entries });
+          var FWC = require('js/common/filtering_wrapper_collection').FilteringWrapperCollection;
+          var filterable_entries = FWC({
+            collection: entries,
+            filter_generator: function() {
+              return function(entry) {
+                return _.any(entry.get('tags'), function(tag) { return tag.value === tag_string; });
+              };
+            }
+          });
+          filterable_entries.filter(tag_string);
+
+          var entries_view = new Views.Entries({ collection: filterable_entries });
 
           view.on('show', function() {
             view.tags_region.show(tags_view);
