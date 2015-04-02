@@ -6,7 +6,7 @@ define(function(require) {
   var logger = PF.logger.get_logger('root/js/apps/entry/entities');
 
   PF.module('EntryApp.Entities', function(Entities, PF, Backbone, Marionette, $, _) {
-    require('js/common/entities');
+    require('js/common/base_entities');
 
     Entities.Entry = PF.Entities.PFDatabaseModel.extend({
       urlRoot: '/api/entry/entry'
