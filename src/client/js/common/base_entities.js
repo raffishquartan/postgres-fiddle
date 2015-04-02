@@ -2,7 +2,7 @@ define(function(require) {
   'use strict';
 
   var PF = require('js/app/obj');
-  var logger = PF.logger.get_logger('root/js/common/entities');
+  var logger = PF.logger.get_logger('root/js/common/base_entities');
   logger.trace('require:lambda -- enter');
 
   PF.module('Entities', function(Entities, PF, Backbone, Marionette, $, _) {
