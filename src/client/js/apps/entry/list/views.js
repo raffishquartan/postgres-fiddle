@@ -11,9 +11,11 @@ define(function(require) {
 
     Views.Tag = PF.Common.Views.PFItemView.extend({
       template: _.template(require('text!js/apps/entry/list/templates/tag.html')),
-      tagName: 'li'
-      // triggers - to do
-      // onRender - if selected then set class active (see header/show/views)
+      tagName: 'li',
+
+      triggers: {
+        'click a.js-tag': 'navigate'
+      }
     });
 
     Views.Tags = PF.Common.Views.PFCompositeView.extend({
@@ -24,8 +26,11 @@ define(function(require) {
 
     Views.Entry = PF.Common.Views.PFItemView.extend({
       template: _.template(require('text!js/apps/entry/list/templates/entry.html')),
-      tagName: 'li'
-      // triggers - to do
+      tagName: 'li',
+
+      triggers: {
+        'click a.js-tag': 'navigate'
+      }
     });
 
     Views.Entries = PF.Common.Views.PFCompositeView.extend({
