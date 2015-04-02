@@ -19,12 +19,20 @@ define(function(require) {
         .spread(function(tags, entries) {
           var Views = require('js/apps/entry/list/views');
           var view = new Views.ListLayout();
+
           var tags_view = new Views.Tags({ collection: tags });
+          tags_view.on('childview:navigate', function(args) {
+            logger.trace('event - tags_view:childview:navigate -- enter w/ ' + args.model.get('value'));
+            PF.trigger('entry:list', args.model.get('value'));
+          });
+
           var entries_view = new Views.Entries({ collection: entries });
+
           view.on('show', function() {
             view.tags_region.show(tags_view);
             view.entries_region.show(entries_view);
           });
+
           PF.region_main.show(view);
         });
 

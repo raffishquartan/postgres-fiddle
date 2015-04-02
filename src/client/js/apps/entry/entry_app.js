@@ -25,7 +25,7 @@ define(function(require) {
 
     PF.on('entry:list', function(tag_string) {
       logger.trace('PF.event - entry:list -- enter - tag_string: ' + tag_string);
-      PF.navigate('entry');
+      PF.navigate('entry' + (tag_string ? '/' + tag_string : ''));
       API.show_list(tag_string);
       logger.trace('PF.event - entry:list -- exit');
     });
