@@ -56,7 +56,10 @@ function configure_express_middleware(app) {
     { maxAge: server_config.static_max_age }));
   app.use('/js', express.static(path.join(server_config.client_root, 'js'), { maxAge: server_config.static_max_age }));
   app.use(function(req, res, next) { // Fall back to always sending index.html
+    logger.debug('client request ' + req.originalUrl + ' (route: ' + JSON.stringify(req.route) +
+      ') has fallen through to index.html catch');
     res.sendFile(path.join(server_config.client_root, 'index.html'));
   });
-  app.use(errorhandler()); // not appropriate for a prod site, see SES / http://calv.info/node-and-express-tips/ for another approach
+  // TODO not appropriate for a prod site, see SES / http://calv.info/node-and-express-tips/ for another approach:
+  app.use(errorhandler());
 }
