@@ -13,7 +13,7 @@ module.exports = function(grunt) {
     // Plugin tasks
     clean: {
       all: {
-        src: ['build', 'test/out', 'test/tmp', '**/*~', '**/.*~', '.grunt']
+        src: ['build', '**/*~', '**/.*~', '.grunt', 'src/logs']
       }
     },
 
@@ -37,8 +37,6 @@ module.exports = function(grunt) {
         },
         src: [
           './**/*_utest.js',
-          '!./test/out/server/node_modules/**/*.js',
-          '!./test/out/client/bower_components/**/*.js'
         ]
       },
       integration: {
@@ -48,8 +46,6 @@ module.exports = function(grunt) {
         },
         src: [
           './**/*_itest.js',
-          '!./test/out/server/node_modules/**/*.js',
-          '!./test/out/client/bower_components/**/*.js'
         ]
       }
     },
@@ -62,13 +58,6 @@ module.exports = function(grunt) {
         dest: 'build/out',
         expand: true,
         mode: true
-      },
-      test: {
-        cwd: 'src',
-        src: ['**'],
-        dest: 'test/out',
-        expand: true,
-        mode: true
       }
     },
 
@@ -76,11 +65,6 @@ module.exports = function(grunt) {
       build: {
         options: {
           create: ['build/out/server/logs']
-        }
-      },
-      test: {
-        options: {
-          create: ['test/out/server/logs']
         }
       }
     },
@@ -95,7 +79,7 @@ module.exports = function(grunt) {
             ' */\n'
         },
         files: {
-          src: ['build/out/**/*.js', 'test/out/**/*.js']
+          src: ['build/out/**/*.js']
         }
       },
 
@@ -108,7 +92,7 @@ module.exports = function(grunt) {
             ' */\n'
         },
         files: {
-          src: ['build/out/**/*.css', 'test/out/**/*.css']
+          src: ['build/out/**/*.css']
         }
       },
 
@@ -121,7 +105,7 @@ module.exports = function(grunt) {
             '-->\n'
         },
         files: {
-          src: ['build/out/**/*.html', 'test/out/**/*.html']
+          src: ['build/out/**/*.html']
         }
       },
 
@@ -133,7 +117,7 @@ module.exports = function(grunt) {
             '# (C) 2015-<%= year %> <%= pkg.author.name %>\n'
         },
         files: {
-          src: ['build/out/**/*.sh', 'test/out/**/*.sh']
+          src: ['build/out/**/*.sh']
         }
       }
     },
