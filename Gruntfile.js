@@ -55,6 +55,51 @@ module.exports = function(grunt) {
       }
     },
 
+    jasmine: {
+      client: {
+        src: './src/client/js/**/*.js',
+        options: {
+          specs: './src/client/js/**/*_jtest.js',
+          outfile: './test/client-jasmine.html',
+          template: require('grunt-template-jasmine-requirejs'),
+          templateOptions: {
+            requireConfigFile: './src/client/js/main.js'
+          }
+        }
+      }
+    },
+
+    // POTENTIAL ISSUE: Does grunt-contrib-copy/tasks/copy.js use mode or just default it to false?
+    copy: {
+      build: {
+        cwd: 'src',
+        src: ['**'],
+        dest: 'build/out',
+        expand: true,
+        mode: true
+      },
+      test: {
+        cwd: 'src',
+        src: ['**'],
+        dest: 'test/out',
+        expand: true,
+        mode: true
+      }
+    },
+
+    mkdir: {
+      build: {
+        options: {
+          create: ['build/out/server/logs']
+        }
+      },
+      test: {
+        options: {
+          create: ['test/out/server/logs']
+        }
+      }
+    },
+
     usebanner: {
       js: {
         options: {
