@@ -22,9 +22,7 @@ module.exports = function(grunt) {
       all: [
         'src/**/*.js',
         '!src/server/node_modules/**/*.js',
-        '!src/client/bower_components/**/*.js',
-        '!src/test/blanket.js'
-
+        '!src/client/bower_components/**/*.js'
       ],
       options: {
         jshintrc: '.jshintrc',
@@ -35,12 +33,10 @@ module.exports = function(grunt) {
       unit: {
         options: {
           reporter: 'spec',
-          clearRequireCache: true,
-          require: 'src/test/blanket'
+          clearRequireCache: true
         },
         src: [
           './**/*_utest.js',
-          '!./test/blanket.js',
           '!./test/out/server/node_modules/**/*.js',
           '!./test/out/client/bower_components/**/*.js'
         ]
@@ -48,12 +44,10 @@ module.exports = function(grunt) {
       integration: {
         options: {
           reporter: 'spec',
-          clearRequireCache: true,
-          require: 'src/test/blanket'
+          clearRequireCache: true
         },
         src: [
           './**/*_itest.js',
-          '!./test/blanket.js',
           '!./test/out/server/node_modules/**/*.js',
           '!./test/out/client/bower_components/**/*.js'
         ]
