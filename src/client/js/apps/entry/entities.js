@@ -9,15 +9,18 @@ define(function(require) {
     require('js/common/base_entities');
 
     Entities.Entry = PF.Entities.PFDatabaseModel.extend({
+      __name: 'Entry',
       urlRoot: '/api/entry/entry'
     });
 
     Entities.EntryCollection = PF.Entities.PFDatabaseCollection.extend({
+      __name: 'EntryCollection',
       url: '/api/entry/entry',
       model: Entities.Entry
     });
 
     Entities.Tag = PF.Entities.PFDatabaseModel.extend({
+      __name: 'Tag',
       urlRoot: '/api/entry/tag',
       initialize: function() {
         _.extend(this, new Backbone.Picky.Selectable(this));
@@ -25,6 +28,7 @@ define(function(require) {
     });
 
     Entities.TagCollection = PF.Entities.PFDatabaseCollection.extend({
+      __name: 'TagCollection',
       url: '/api/entry/tag',
       model: Entities.Tag,
 

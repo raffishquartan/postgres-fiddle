@@ -9,6 +9,7 @@ define(function(require) {
     require('js/common/base_entities');
 
     Entities.NavItem = PF.Entities.PFClientOnlyModel.extend({
+      __name: 'NavItem',
       initialize: function() {
         logger.trace('NavItem.initialize -- enter w/ url: ' + this.get('url'));
         _.extend(this, new Backbone.Picky.Selectable(this));
@@ -17,6 +18,7 @@ define(function(require) {
     });
 
     Entities.NavItemCollection = PF.Entities.PFClientOnlyCollection.extend({
+      __name: 'NavItemCollection',
       model: Entities.NavItem,
 
       initialize: function() {
