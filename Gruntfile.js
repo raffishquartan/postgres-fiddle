@@ -37,6 +37,7 @@ module.exports = function(grunt) {
         },
         src: [
           './**/*_utest.js',
+          '!./build/**/*.js'
         ]
       },
       integration: {
@@ -46,6 +47,7 @@ module.exports = function(grunt) {
         },
         src: [
           './**/*_itest.js',
+          '!./build/**/*.js'
         ]
       }
     },
