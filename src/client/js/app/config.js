@@ -8,19 +8,19 @@ define(function(require) {
       root: {
         js: {
           conf: {
-            level: 'debug',
+            level: 'info',
             appenders: ['console']
           },
-          apps: {
+          common: {
             conf: {
               level: 'debug',
               appenders: ['console']
-            },
-            header: {
-              conf: {
-                level: 'trace',
-                appenders: ['console']
-              }
+            }
+          },
+          apps: {
+            conf: {
+              level: 'info',
+              appenders: ['console']
             },
             entry: {
               conf: {
