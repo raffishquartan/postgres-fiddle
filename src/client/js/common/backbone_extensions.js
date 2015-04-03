@@ -54,6 +54,10 @@ define(function(require) {
         return this[name_property] + '(models: ' + JSON.stringify(this.models) + ')';
       };
 
+      Backbone.View.prototype.toString = function() {
+        return this[name_property] + '(cid: ' + this.cid + ', outerHTML: ' + this.$el.prop('outerHTML') + ')';
+      };
+
       Backbone.Model.extend = Backbone.Collection.extend = Backbone.Router.extend = Backbone.View.extend = newExtend;
     })();
   });

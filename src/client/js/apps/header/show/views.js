@@ -10,6 +10,7 @@ define(function(require) {
     require('js/common/views');
 
     Views.NavItemView = PF.Common.Views.PFItemView.extend({
+      __name: 'NavItemView',
       template: _.template(require('text!js/apps/header/show/templates/navitem.html')),
       tagName: 'li',
 
@@ -25,6 +26,7 @@ define(function(require) {
     });
 
     Views.Header = PF.Common.Views.PFCompositeView.extend({
+      __name: 'Header',
       template: _.template(require('text!js/apps/header/show/templates/header.html')),
       childView: Views.NavItemView,
       childViewContainer: 'ul.js-navbar-items',
