@@ -13,7 +13,7 @@ module.exports = function(grunt) {
     // Plugin tasks
     clean: {
       all: {
-        src: ['build', 'test/out', 'test/tmp', '**/*~', '**/.*~']
+        src: ['build', 'test/out', 'test/tmp', '**/*~', '**/.*~', '.grunt']
       }
     },
 
