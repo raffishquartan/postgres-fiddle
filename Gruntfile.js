@@ -16,7 +16,7 @@ module.exports = function(grunt) {
     // Plugin tasks
     clean: {
       all: {
-        src: ['build', '**/*~', '**/.*~', '.grunt', 'src/logs']
+        src: ['build', '**/*~', '**/.*~', '.grunt', 'src/logs', '**/*.pyc']
       }
     },
 
