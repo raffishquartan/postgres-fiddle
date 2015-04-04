@@ -11,6 +11,7 @@ module.exports = function(grunt) {
     time: grunt.template.today("yyyymmdd-HHMM"),
     today: grunt.template.today('yyyy-mm-dd'),
     year: grunt.template.today('yyyy'),
+    build_name: '<%= pkg.name %>-<%= pkg.version %>-<%= time %>',
 
     // Plugin tasks
     clean: {
@@ -67,7 +68,6 @@ module.exports = function(grunt) {
           src: ['build/out/**/*.js']
         }
       },
-
       css: {
         options: {
           banner: '/*\n' +
@@ -80,7 +80,6 @@ module.exports = function(grunt) {
           src: ['build/out/**/*.css']
         }
       },
-
       html: {
         options: {
           banner: '<!--\n' +
@@ -93,7 +92,6 @@ module.exports = function(grunt) {
           src: ['build/out/**/*.html']
         }
       },
-
       sh: {
         options: {
           banner: '#!/bin/bash\n' +
@@ -103,6 +101,17 @@ module.exports = function(grunt) {
         },
         files: {
           src: ['build/out/**/*.sh']
+        }
+      },
+      py: {
+        options: {
+          banner: '#!/bin/bash\n' +
+            '# <%= pkg.name %> - v<%= pkg.version %> - <%= today %>\n' +
+            '# <%= pkg.description %>\n' +
+            '# (C) 2015-<%= year %> <%= pkg.author.name %>\n'
+        },
+        files: {
+          src: ['build/out/**/*.py']
         }
       }
     },
@@ -118,7 +127,7 @@ module.exports = function(grunt) {
     version_file: {
       main: {
         options: {
-          out: 'build/out/postgres-fiddle/version.json',
+          out: 'build/out/<%= build_name %>/version.json',
           generator_list: ['datestring', 'npm_version', 'git_describe'],
           generator_dir: 'generators'
         }
@@ -127,14 +136,14 @@ module.exports = function(grunt) {
 
     exec: {
       mkdir: {
-        command: 'mkdir -p build/out/postgres-fiddle/logs build/dist'
+        command: 'mkdir -p build/out/<%= build_name %>/logs build/dist'
       },
       copy: {
-        command: 'cp -r src/* build/out/postgres-fiddle'
+        command: 'cp -r src/* build/out/<%= build_name %>'
       },
       compress: {
         cwd: 'build/out',
-        command: 'tar czf ../dist/postgres-fiddle.tar.gz-<%= pkg.version %>-<%= time %>.tar.gz postgres-fiddle'
+        command: 'tar czf ../dist/<%= build_name %>.tar.gz <%= build_name %>'
       }
     }
   });
