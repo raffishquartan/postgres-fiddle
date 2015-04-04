@@ -7,3 +7,5 @@ test/out
 *.sublime-workspace
 logs
 .grunt
+*.pyc
+
