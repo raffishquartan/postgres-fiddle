@@ -8,31 +8,13 @@ define(function(require) {
       root: {
         js: {
           conf: {
-            level: 'info',
+            level: 'info', // configure.py: js
             appenders: ['console']
-          },
-          common: {
-            conf: {
-              level: 'debug',
-              appenders: ['console']
-            }
-          },
-          apps: {
-            conf: {
-              level: 'info',
-              appenders: ['console']
-            },
-            entry: {
-              conf: {
-                level: 'trace',
-                appenders: ['console']
-              }
-            }
           }
         },
         events_logger: {
           conf: {
-            level: 'trace',
+            level: 'info', // configure.py: events_logger
             appenders: ['console']
           }
         }
