@@ -1,5 +1,7 @@
 'use strict';
 
+var exec = require('child_process').exec;
+
 module.exports = function(grunt) {
   require('matchdep').filterDev('grunt-*').forEach(grunt.loadNpmTasks);
 
@@ -49,25 +51,6 @@ module.exports = function(grunt) {
           './**/*_itest.js',
           '!./build/**/*.js'
         ]
-      }
-    },
-
-    // POTENTIAL ISSUE: Does grunt-contrib-copy/tasks/copy.js use mode or just default it to false?
-    copy: {
-      build: {
-        cwd: 'src',
-        src: ['**'],
-        dest: 'build/out',
-        expand: true,
-        mode: true
-      }
-    },
-
-    mkdir: {
-      build: {
-        options: {
-          create: ['build/out/logs']
-        }
       }
     },
 
@@ -124,6 +107,7 @@ module.exports = function(grunt) {
       }
     },
 
+    // TODO? Needed for version_file
     'git-describe': {
       'options': {
         'failOnError': true
@@ -131,40 +115,33 @@ module.exports = function(grunt) {
       'main': {}
     },
 
-    compress: {
-      main: {
-        options: {
-          archive: 'build/dist/postgres-fiddle-<%= pkg.version %>-<%= time %>.tar.gz',
-          mode: 'tgz',
-          pretty: true
-        },
-        files: [{
-          cwd: 'build/out',
-          expand: true,
-          src: ['**'],
-          dest: 'postgres-fiddle/'
-        }]
-      }
-    },
-
     version_file: {
       main: {
         options: {
-          out: 'build/out/version.json',
+          out: 'build/out/postgres-fiddle/version.json',
           generator_list: ['datestring', 'npm_version', 'git_describe'],
           generator_dir: 'generators'
         }
       }
+    },
+
+    exec: {
+      mkdir: {
+        command: 'mkdir -p build/out/postgres-fiddle/logs build/dist'
+      },
+      copy: {
+        command: 'cp -r src/* build/out/postgres-fiddle'
+      },
+      compress: {
+        cwd: 'build/out',
+        command: 'tar czf ../dist/postgres-fiddle.tar.gz-<%= pkg.version %>-<%= time %>.tar.gz postgres-fiddle'
+      }
     }
   });
 
-  grunt.registerTask('assemble', ['copy', 'mkdir']);
+  grunt.registerTask('assemble', ['exec:mkdir', 'exec:copy']);
   grunt.registerTask('metadata', ['usebanner', 'version_file']);
   grunt.registerTask('test', ['jshint', 'mochaTest', 'git-is-clean']);
 
-  grunt.registerTask('build', ['clean', 'assemble', 'metadata', 'compress', 'test']);
-  grunt.registerTask('quick', ['clean', 'assemble', 'test']);
-
-  // Running test before compress does not work - why?
-  grunt.registerTask('broken_build', ['clean', 'assemble', 'test', 'compress'])
+  grunt.registerTask('build', ['test', 'clean', 'assemble', 'metadata', 'exec:compress'])
 };
