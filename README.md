@@ -23,6 +23,8 @@ SES requires Node >= 0.10, pm2 >= 0.12 and postgres >= 9.1.
 
 ### Installation
 
+**INSTRUCTIONS TO BE UPDATED TO USE INSTALLATION INSTRUCTIONS**
+
 ### 0) Install to the desired location
 
 Uncompress `build/dist/postgres-fiddle-*.tar.gz` to the desired location
@@ -66,15 +68,20 @@ pm2#table-of-contents) for other useful commands.
 
 Alternatively, to run from source before building (e.g. for testing), `cd src` and run `nodemon server/app/server.js`
 
-### Issues
+## Nice features
 
-1. Running grunt task compress after mochaTest in the same grunt run causes mochaTest to fail during
-compress, grunt task broken_build illustrates this problem
-2. grunt-contrib-copy doesn't copy symlinks but follows them and grunt-contrib-compress does not preserve permissions
-so the resulting build file is broken
-  - The server's `app/...` require statements do not read the core server code but the copy in node_modules
-  - The client_root needs an extra '..' to work
-3. There is no client testing implemented
+postgres-fiddle started as a simple app to figure out how best to use postgres with node. In the end it's grown a
+little and has some nice features I intend to use in other apps as well
+
+- Configurable log4j-like logging on both client and server that refreshes (on the server) without a server restart
+- Backbone extensions for easier debugging and better logging
+- Scripts for installing, upgrading and configuring the application that are easily usable elsewhere
+- A clean code structure that makes code navigation easy
+- Server tests that help turn Javascript runtime errors into test-time errors
+
+## Issues
+
+- There is no client testing implemented
 
 ## Changelog
 
