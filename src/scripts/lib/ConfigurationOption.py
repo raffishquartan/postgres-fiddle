@@ -66,6 +66,8 @@ class ConfigurationOption:
     self.description = description
 
   def configure_option(self, current_value_install_dir, dest_value_install_dir):
+    print('')
+    print('')
     #### Load current file as string
     with open(self.current_value_file_path, 'r') as current_value_file:
       current_file_as_string = current_value_file.read()
@@ -75,13 +77,13 @@ class ConfigurationOption:
       raise Exception(
         'Error:\n' +
         self.name + ' could not be configured because there are multiple matches for the pattern ' +
-        '"' + self.regex_match_string + '" in ' + current_value_file_path
+        '"' + self.regex_match_string + '" in ' + self.current_value_file_path
       )
     elif len(re.findall(self.regex_match_string, current_file_as_string)) == 0:
       raise Exception(
         'Error:\n' +
         self.name + ' could not be configured because there are no matches for the pattern ' +
-        '"' + self.regex_match_string + '" in ' + current_value_file_path
+        '"' + self.regex_match_string + '" in ' + self.current_value_file_path
       )
     else:
       #### Extract current value
@@ -116,6 +118,8 @@ class ConfigurationOption:
           )
       else:
         print('Making no changes to ' + self.output_file_path)
+      print('')
+      print('')
 
 if __name__ == '__main__':
   print('This file is not configured to be run separately; tests will come at a later date')

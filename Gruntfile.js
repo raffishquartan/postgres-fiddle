@@ -105,7 +105,7 @@ module.exports = function(grunt) {
       },
       py: {
         options: {
-          banner: '#!/bin/bash\n' +
+          banner: '#!/usr/bin/python\n' +
             '# <%= pkg.name %> - v<%= pkg.version %> - <%= today %>\n' +
             '# <%= pkg.description %>\n' +
             '# (C) 2015-<%= year %> <%= pkg.author.name %>\n'
