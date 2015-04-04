@@ -32,7 +32,7 @@
   "loggers": {
     "app": {
       "conf": {
-        "level": "trace",
+        "level": "warn",
         "destgroups": ["node-appender", "app-appender"]
       }
     }
