@@ -65,7 +65,7 @@ module.exports = function(grunt) {
             ' */\n'
         },
         files: {
-          src: ['build/out/**/*.js']
+          src: ['build/out/**/*.js', '!build/out/**/node_modules/**']
         }
       },
       css: {
@@ -77,7 +77,7 @@ module.exports = function(grunt) {
             ' */\n'
         },
         files: {
-          src: ['build/out/**/*.css']
+          src: ['build/out/**/*.css', '!build/out/**/node_modules/**']
         }
       },
       html: {
@@ -89,7 +89,7 @@ module.exports = function(grunt) {
             '-->\n'
         },
         files: {
-          src: ['build/out/**/*.html']
+          src: ['build/out/**/*.html', '!build/out/**/node_modules/**']
         }
       },
       sh: {
@@ -100,7 +100,7 @@ module.exports = function(grunt) {
             '# (C) 2015-<%= year %> <%= pkg.author.name %>\n'
         },
         files: {
-          src: ['build/out/**/*.sh']
+          src: ['build/out/**/*.sh', '!build/out/**/node_modules/**']
         }
       },
       py: {
@@ -111,7 +111,7 @@ module.exports = function(grunt) {
             '# (C) 2015-<%= year %> <%= pkg.author.name %>\n'
         },
         files: {
-          src: ['build/out/**/*.py']
+          src: ['build/out/**/*.py', '!build/out/**/node_modules/**']
         }
       }
     },
