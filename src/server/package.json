@@ -1,0 +1,29 @@
+{
+  "name": "postgres-fiddle-server",
+  "version": "0.0.0",
+  "description": "Server modules for postgres-fiddle",
+  "private": true,
+  "dependencies": {
+    "body-parser": "1.12.x",
+    "compression": "1.4.x",
+    "express": "4.11.x",
+    "errorhandler": "1.3.x",
+    "log4js": "git://github.com/cfogelberg/log4js-node.git",
+    "method-override": "2.3.x",
+    "moment": "2.9.x",
+    "pg": "4.2.x",
+    "pg-hstore": "2.3.x",
+    "q": "1.1.x",
+    "serve-favicon": "2.2.x",
+    "sequelize": "2.0.x",
+    "ua-parser": "0.3.x",
+    "underscore": "1.8.x"
+  },
+  "devDependencies": {
+    "glob": "5.0.x",
+    "sinon": "1.14.x"
+  },
+  "engines": {
+    "node": "0.11.x"
+  }
+}

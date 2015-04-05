@@ -1,0 +1,13 @@
+<div>
+  <div>
+    <span><%= date %></span>
+    <span>
+    <% _.each(tags, function(tag) { %>
+      <i><%= tag.value %></i>
+    <% }); %>
+    </span>
+  </div>
+  <div>
+    <%= body %>
+  </div>
+</div>

@@ -1,0 +1,17 @@
+{
+  "name":             "postgres-fiddle",
+
+  "watch":            true,
+  "ignore_watch":     ["[\\/\\\\]\\./", "node_modules"],
+
+  "log_date_format":  "YYYY-MM-DD HH:mm Z",
+  "error_file":       "./logs/pm2.log",
+  "out_file":         "./logs/pm2.log",
+  "pid_file":         "./logs/pm2.pid",
+
+  "exec_mode":        "cluster_mode",
+  "instances":        1,
+
+  "script":           "server/app/server.js",
+  "args":             "[]"
+}

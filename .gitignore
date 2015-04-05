@@ -1,0 +1,11 @@
+*~
+.~lock*
+.project
+.settings
+build
+test/out
+*.sublime-workspace
+logs
+.grunt
+*.pyc
+
