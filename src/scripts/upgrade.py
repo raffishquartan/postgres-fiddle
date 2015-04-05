@@ -54,7 +54,7 @@ def upgrade_app(install_dir_path, app_symlink_path):
 
 
 if __name__ == '__main__':
-  print('NB: The upgraded application install directory is probably the directory this script is in')
+  print('NB: The upgraded application install directory is probably the parent of this scripts directory')
   install_dir_path = raw_input('Enter the upgraded application install directory path: ').strip()
   app_symlink_path = raw_input('Enter the application symlink path:                    ').strip()
   print('\nYou have entered:')
@@ -66,5 +66,15 @@ if __name__ == '__main__':
       install_dir_path=install_dir_path,
       app_symlink_path=app_symlink_path
     )
+    print('')
+    print('')
+    print('')
+    print('******************************************************************')
+    print('******************************************************************')
+    print('******************************************************************')
+    print('                        UPGRADE COMPLETE')
+    print('******************************************************************')
+    print('******************************************************************')
+    print('******************************************************************')
   else:
     print('Aborting')

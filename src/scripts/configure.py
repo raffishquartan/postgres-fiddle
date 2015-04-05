@@ -52,13 +52,6 @@ def configure_app(current_value_install_dir, output_value_install_dir):
   )
 
   groups.append(configure.Group(
-    group_name='Server Express logging',
-    current_value_install_dir=current_value_install_dir,
-    output_value_install_dir=output_value_install_dir,
-    default_config_file_rel_path='./server/app/config/logger.js'
-  ))
-
-  groups.append(configure.Group(
     group_name='Database information',
     current_value_install_dir=current_value_install_dir,
     output_value_install_dir=output_value_install_dir,
@@ -133,8 +126,6 @@ def configure_app(current_value_install_dir, output_value_install_dir):
   )
 
   [group.configure_options() for group in groups]
-  print('NB: server/app/config/logger.js must be configured manually')
-  print('CONFIGURATION COMPLETE')
 
 
 if __name__ == '__main__':
@@ -153,5 +144,15 @@ if __name__ == '__main__':
       current_value_install_dir=current_value_install_dir,
       output_value_install_dir=output_value_install_dir
     )
+    print('')
+    print('')
+    print('')
+    print('******************************************************************')
+    print('******************************************************************')
+    print('******************************************************************')
+    print('                    CONFIGURATION COMPLETE')
+    print('******************************************************************')
+    print('******************************************************************')
+    print('******************************************************************')
   else:
     print('Aborting')

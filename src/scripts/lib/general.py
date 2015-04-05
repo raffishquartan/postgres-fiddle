@@ -45,7 +45,7 @@ def prompt_for_confirm(prompt=None, resp=False):
 
 
 
-def extract_value_from_file_string(regex_match_string, file_as_string, file_path='file', name='Property'):
+def value_from_file_string(regex_match_string, file_as_string, file_path='file', name='Property'):
   #### Check that regex_match_string matches once and once only
   if len(re.findall(regex_match_string, file_as_string)) > 1:
     raise Exception(
