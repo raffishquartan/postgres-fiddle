@@ -1,48 +1,9 @@
-import re
 import os.path as path
+import re
 
-def prompt_for_confirm(prompt=None, resp=False):
-    '''
-    prompts for yes or no response from the user. Returns True for yes and
-    False for no.
+import general as general
 
-    'resp' should be set to the default value assumed by the caller when
-    user simply types ENTER.
-
-    >>> prompt_for_confirm(prompt='Create Directory?', resp=True)
-    Create Directory? [y]|n:
-    True
-    >>> prompt_for_confirm(prompt='Create Directory?', resp=False)
-    Create Directory? [n]|y:
-    False
-    >>> prompt_for_confirm(prompt='Create Directory?', resp=False)
-    Create Directory? [n]|y: y
-    True
-
-    Source: https://code.activestate.com/recipes/541096-prompt-the-user-for-confirmation/
-    '''
-
-    if prompt is None:
-        prompt = 'Confirm'
-
-    if resp:
-        prompt = '%s [%s]|%s: ' % (prompt, 'y', 'n')
-    else:
-        prompt = '%s [%s]|%s: ' % (prompt, 'n', 'y')
-
-    while True:
-        ans = raw_input(prompt)
-        if not ans:
-            return resp
-        if ans not in ['y', 'Y', 'n', 'N']:
-            print 'please enter y or n.'
-            continue
-        if ans == 'y' or ans == 'Y':
-            return True
-        if ans == 'n' or ans == 'N':
-            return False
-
-class ConfigurationOption:
+class Option:
   """
   Represents a single configuration option
   """
@@ -101,7 +62,7 @@ class ConfigurationOption:
       else:
         output_value = input_value
 
-      if prompt_for_confirm('Value will be set to "' + output_value + '", is that correct? '):
+      if general.prompt_for_confirm('Value will be set to "' + output_value + '", is that correct? '):
         replacement_string = re.sub(r'\([^\)]*\)', output_value, self.regex_match_string)
         updated_file_as_str_count_tuple = re.subn(self.regex_match_string, replacement_string, current_file_as_string)
 
@@ -120,6 +81,67 @@ class ConfigurationOption:
         print('Making no changes to ' + self.output_file_path)
       print('')
       print('')
+
+
+
+class Group:
+  '''
+  Represents a group of configuration options (usually associated with one file, but not necessarily)
+  '''
+
+  def __init__(self, group_name, current_value_install_dir, output_value_install_dir, default_config_file_rel_path):
+    if path.isdir(current_value_install_dir) is not True:
+      raise Exception(
+        'Error:\n' +
+        '"' + current_value_install_dir + '" could not be found, please check paths'
+      )
+
+    if path.isdir(output_value_install_dir) is not True:
+      raise Exception(
+        'Error:\n' +
+        '"' + output_value_install_dir + '" could not be found, please check paths'
+      )
+
+    self.group_name = group_name
+    self.current_value_install_dir = current_value_install_dir
+    self.output_value_install_dir = output_value_install_dir
+    self.default_config_file_rel_path = default_config_file_rel_path
+    self.options = []
+
+  def add_option(self, re_string, name, desc, curr_val_dir=None, output_val_dir=None, config_file_rel_path=None):
+    '''
+    Adds a Option to the group.
+
+    NB: re_string is assumed to be a regex string with a single capture group that has the form '(<something>)'
+    '''
+    if curr_val_dir is None:
+      curr_val_dir = self.current_value_install_dir
+    if output_val_dir is None:
+      output_val_dir = self.output_value_install_dir
+    if config_file_rel_path is None:
+      config_file_rel_path = self.default_config_file_rel_path
+
+    curr_value_file_path = path.join(curr_val_dir, config_file_rel_path)
+    output_file_path = path.join(output_val_dir, config_file_rel_path)
+    self.options.append(Option(
+      current_value_file_path = curr_value_file_path,
+      output_file_path=output_file_path,
+      regex_match_string=re_string,
+      name=name,
+      description=desc
+    ))
+
+  def configure_options(self):
+    print('******************************************************************')
+    print('  CONFIGURING ' + self.group_name.upper())
+    print('******************************************************************')
+    [option.configure_option(self.current_value_install_dir, self.output_value_install_dir) for option in self.options]
+    print('******************************************************************')
+    print('')
+    print('')
+    print('')
+
+
 
 if __name__ == '__main__':
   print('This file is not configured to be run separately; tests will come at a later date')
