@@ -28,13 +28,12 @@ class Option:
 
   def configure_option(self, current_value_install_dir, dest_value_install_dir):
     print('')
-    print('')
     #### Load current file as string
     with open(self.current_value_file_path, 'r') as current_value_file:
       current_file_as_string = current_value_file.read()
 
-    #### Extract current value, extract_value_from_file_string also checks regex matches once and once only
-    current_value = general.extract_value_from_file_string(
+    #### Extract current value, value_from_file_string also checks regex matches once and once only
+    current_value = general.value_from_file_string(
       regex_match_string=self.regex_match_string,
       file_as_string=current_file_as_string,
       file_path=self.current_value_file_path,
@@ -42,10 +41,8 @@ class Option:
     )
 
     #### Explain to user and get updated value
-    print(self.name)
-    print(self.description)
-    print('')
-    print('Current value:                                         ' + current_value)
+    print(self.name + ': ' + self.description)
+    print('Current value: ' + current_value)
     input_value = raw_input('Enter desired value, or leave blank to make no change: ')
 
     if input_value == '':
@@ -70,8 +67,6 @@ class Option:
         )
     else:
       print('Making no changes to ' + self.output_file_path)
-    print('')
-    print('')
 
 
 
