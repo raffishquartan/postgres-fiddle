@@ -1,0 +1,40 @@
+{
+  "log4js": {
+    "appenders": [{
+      "category": "connect-appender",
+      "type": "dateFile",
+      "filename": "logs/postgres-fiddle.requests.log",
+      "pattern": "-yyyy-MM-dd",
+      "alwaysIncludePattern": false
+    }, {
+      "category": "connect-appender",
+      "type": "dateFile",
+      "filename": "logs/postgres-fiddle.node.log",
+      "pattern": "-yyyy-MM-dd",
+      "alwaysIncludePattern": false
+    }, {
+      "category": "node-appender",
+      "type": "dateFile",
+      "filename": "logs/postgres-fiddle.node.log",
+      "pattern": "-yyyy-MM-dd",
+      "alwaysIncludePattern": false
+    }, {
+      "category": "app-appender",
+      "type": "dateFile",
+      "filename": "logs/postgres-fiddle.app.log",
+      "pattern": "-yyyy-MM-dd",
+      "alwaysIncludePattern": false
+    }, {
+      "category": "app-appender",
+      "type": "console"
+    }]
+  },
+  "loggers": {
+    "app": {
+      "conf": {
+        "level": "warn",
+        "destgroups": ["node-appender", "app-appender"]
+      }
+    }
+  }
+}
