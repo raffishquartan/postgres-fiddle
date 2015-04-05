@@ -65,7 +65,7 @@ module.exports = function(grunt) {
             ' */\n'
         },
         files: {
-          src: ['build/out/**/*.js', '!build/out/**/node_modules/**']
+          src: ['build/out/**/*.js', '!build/out/**/node_modules/**', '!build/out/**/bower_components/**']
         }
       },
       css: {
@@ -77,7 +77,7 @@ module.exports = function(grunt) {
             ' */\n'
         },
         files: {
-          src: ['build/out/**/*.css', '!build/out/**/node_modules/**']
+          src: ['build/out/**/*.css', '!build/out/**/node_modules/**', '!build/out/**/bower_components/**']
         }
       },
       html: {
@@ -89,7 +89,7 @@ module.exports = function(grunt) {
             '-->\n'
         },
         files: {
-          src: ['build/out/**/*.html', '!build/out/**/node_modules/**']
+          src: ['build/out/**/*.html', '!build/out/**/node_modules/**', '!build/out/**/bower_components/**']
         }
       },
       sh: {
@@ -100,7 +100,7 @@ module.exports = function(grunt) {
             '# (C) 2015-<%= year %> <%= pkg.author.name %>\n'
         },
         files: {
-          src: ['build/out/**/*.sh', '!build/out/**/node_modules/**']
+          src: ['build/out/**/*.sh', '!build/out/**/node_modules/**', '!build/out/**/bower_components/**']
         }
       },
       py: {
@@ -111,17 +111,9 @@ module.exports = function(grunt) {
             '# (C) 2015-<%= year %> <%= pkg.author.name %>\n'
         },
         files: {
-          src: ['build/out/**/*.py', '!build/out/**/node_modules/**']
+          src: ['build/out/**/*.py', '!build/out/**/node_modules/**', '!build/out/**/bower_components/**']
         }
       }
-    },
-
-    // TODO? Needed for version_file
-    'git-describe': {
-      'options': {
-        'failOnError': true
-      },
-      'main': {}
     },
 
     version_file: {
