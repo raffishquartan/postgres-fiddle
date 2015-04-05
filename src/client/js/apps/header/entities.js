@@ -3,7 +3,7 @@ define(function(require) {
 
   var q = require('q');
   var PF = require('js/app/obj');
-  var logger = PF.logger.get_logger('root/js/apps/header/entities');
+  var logger = PF.logger.get('root/js/apps/header/entities');
 
   PF.module('HeaderApp.Entities', function(Entities, PF, Backbone, Marionette, $, _) {
     require('js/common/base_entities');

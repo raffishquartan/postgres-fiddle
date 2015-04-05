@@ -8,7 +8,7 @@ define(function(require) {
   var PF = new Marionette.Application();
   PF.config = require('js/app/config');
   PF.logger = require('js/app/logger_builder')(PF.config.logger);
-  var logger = PF.logger.get_logger('root/js/app/obj');
+  var logger = PF.logger.get('root/js/app/obj');
   logger.debug('require:lambda -- entered, PF built, config loaded, logger initialised');
 
   // Set up regions
@@ -30,7 +30,7 @@ define(function(require) {
 
   // Log all events at trace
   PF.on('all', function(event_string) {
-    var events_logger = PF.logger.get_logger('root/events_logger');
+    var events_logger = PF.logger.get('root/events_logger');
     events_logger.trace('PF.event -- events logger: ' + event_string);
   });
 
