@@ -33,54 +33,45 @@ class Option:
     with open(self.current_value_file_path, 'r') as current_value_file:
       current_file_as_string = current_value_file.read()
 
-    #### Check that regex_match_string matches once and once only
-    if len(re.findall(self.regex_match_string, current_file_as_string)) > 1:
-      raise Exception(
-        'Error:\n' +
-        self.name + ' could not be configured because there are multiple matches for the pattern ' +
-        '"' + self.regex_match_string + '" in ' + self.current_value_file_path
-      )
-    elif len(re.findall(self.regex_match_string, current_file_as_string)) == 0:
-      raise Exception(
-        'Error:\n' +
-        self.name + ' could not be configured because there are no matches for the pattern ' +
-        '"' + self.regex_match_string + '" in ' + self.current_value_file_path
-      )
+    #### Extract current value, extract_value_from_file_string also checks regex matches once and once only
+    current_value = general.extract_value_from_file_string(
+      regex_match_string=self.regex_match_string,
+      file_as_string=current_file_as_string,
+      file_path=self.current_value_file_path,
+      name=self.name
+    )
+
+    #### Explain to user and get updated value
+    print(self.name)
+    print(self.description)
+    print('')
+    print('Current value:                                         ' + current_value)
+    input_value = raw_input('Enter desired value, or leave blank to make no change: ')
+
+    if input_value == '':
+      output_value = current_value
     else:
-      #### Extract current value
-      current_value = re.match('.*' + self.regex_match_string + '.*', current_file_as_string, re.DOTALL).group(1)
+      output_value = input_value
 
-      #### Explain to user and get updated value
-      print(self.name)
-      print(self.description)
-      print('')
-      print('Current value:                                         ' + current_value)
-      input_value = raw_input('Enter desired value, or leave blank to make no change: ')
+    if general.prompt_for_confirm('Value will be set to "' + output_value + '", is that correct? '):
+      replacement_string = re.sub(r'\([^\)]*\)', output_value, self.regex_match_string)
+      updated_file_as_str_count_tuple = re.subn(self.regex_match_string, replacement_string, current_file_as_string)
 
-      if input_value == '':
-        output_value = current_value
+      if updated_file_as_str_count_tuple[1] == 1:
+        #### Write updated value to destination path
+        with open(self.output_file_path, 'w') as destination_value_file:
+          #destination_value_file.truncate()
+          destination_value_file.write(updated_file_as_str_count_tuple[0])
       else:
-        output_value = input_value
-
-      if general.prompt_for_confirm('Value will be set to "' + output_value + '", is that correct? '):
-        replacement_string = re.sub(r'\([^\)]*\)', output_value, self.regex_match_string)
-        updated_file_as_str_count_tuple = re.subn(self.regex_match_string, replacement_string, current_file_as_string)
-
-        if updated_file_as_str_count_tuple[1] == 1:
-          #### Write updated value to destination path
-          with open(self.output_file_path, 'w') as destination_value_file:
-            #destination_value_file.truncate()
-            destination_value_file.write(updated_file_as_str_count_tuple[0])
-        else:
-          raise Exception(
-            'Error:\n' +
-            self.name + ' was expecting just one substitution, but ' + updated_file_as_str_count_tuple[1] + ' ' +
-            'were made'
-          )
-      else:
-        print('Making no changes to ' + self.output_file_path)
-      print('')
-      print('')
+        raise Exception(
+          'Error:\n' +
+          self.name + ' was expecting just one substitution, but ' + updated_file_as_str_count_tuple[1] + ' ' +
+          'were made'
+        )
+    else:
+      print('Making no changes to ' + self.output_file_path)
+    print('')
+    print('')
 
 
 
