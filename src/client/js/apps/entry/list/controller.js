@@ -4,7 +4,7 @@ define(function(require) {
   var q = require('q');
 
   var PF = require('js/app/obj');
-  var logger = PF.logger.get_logger('root/js/apps/entry/list/controller');
+  var logger = PF.logger.get('root/js/apps/entry/list/controller');
   logger.trace('require:lambda -- enter');
 
   PF.module('EntryApp.List', function(List, PF, Backbone, Marionette, $, _) {

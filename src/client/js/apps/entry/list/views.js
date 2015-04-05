@@ -2,7 +2,7 @@ define(function(require) {
   'use strict';
 
   var PF = require('js/app/obj');
-  var logger = PF.logger.get_logger('root/js/apps/entry/list/view');
+  var logger = PF.logger.get('root/js/apps/entry/list/view');
   logger.trace('require:lambda -- enter');
 
   PF.module('EntryApp.List.Views', function(Views, PF, Backbone, Marionette, $, _) {

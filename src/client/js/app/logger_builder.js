@@ -213,7 +213,7 @@ define(function(require) {
        * @param  {String} group The logger group - usually the path to the javascript file
        * @return {Object}       A logger object for {{group}}
        */
-      get_logger: function(group) {
+      get: function(group) {
         if(existing_loggers[group]) {
           return existing_loggers[group];
         }

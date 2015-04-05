@@ -42,7 +42,7 @@ require([
 ], function(PF){
   'use strict';
 
-  var logger = PF.logger.get_logger('root/js/main');
+  var logger = PF.logger.get('root/js/main');
   logger.trace('require:lambda -- enter');
   RegExp.escape_text= function(s) {
       return s.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');

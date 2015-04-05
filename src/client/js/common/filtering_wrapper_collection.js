@@ -2,7 +2,7 @@ define(function(require) {
   'use strict';
 
   var PF = require('js/app/obj');
-  var logger = PF.logger.get_logger('root/js/common/filtering_wrapper_collection');
+  var logger = PF.logger.get('root/js/common/filtering_wrapper_collection');
 
   PF.module('Entities', function(Entities, PF, Backbone, Marionette, $, _) {
     /**
