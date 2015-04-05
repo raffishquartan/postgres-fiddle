@@ -11,7 +11,7 @@ Assumptions:
 
 #!/usr/bin/python
 
-import os.path as path
+import os as os
 
 import lib.general as general
 import configure as configure
