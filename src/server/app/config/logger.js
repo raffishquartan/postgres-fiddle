@@ -1,9 +1,16 @@
 'use strict';
 
+var moment = require('moment');
+
 /**
  * Logger-specific configuration
  */
 module.exports = {
-  // TODO: When log4js version updated to include my PR, add express_tokens and override :date with custom token
-  express_format: '[:date] :remote-addr ":method :url HTTP/:http-version" :status ":referrer" ":user-agent"'
+  express_format: ':date EXPRESS [:remote-addr] ":method :url HTTP/:http-version" :status ":referrer" ":user-agent"',
+  custom_tokens: [{
+    token: ':date',
+    replacement: function() {
+      return moment().format('YYYY-MM-DD HH:mm:ss.SSS');
+    }
+  }]
 };
