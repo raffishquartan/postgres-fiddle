@@ -42,8 +42,13 @@ function configure_express_middleware(app) {
 
   app.use(compression());
   app.use(serve_favicon(path.join(server_config.client_root, 'assets', 'images', 'favicons', 'favicon.ico')));
-  app.use(log4js.connectLogger(logger_module.get_log4js('connect-appender'),
-    { level: 'auto', layout: 'basic', immediate: true, format: logger_config.express_format }));
+  app.use(log4js.connectLogger(logger_module.get_log4js('connect-appender'), {
+    level: 'auto',
+    layout: 'basic',
+    immediate: true,
+    format: logger_config.express_format,
+    tokens: logger_config.custom_tokens
+  }));
   app.use(body_parser.json());
   app.use(body_parser.urlencoded({ extended: false }));
   app.use(method_override('X-HTTP-Method'));          // Microsoft
