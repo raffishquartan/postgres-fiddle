@@ -1,4 +1,5 @@
 import os as os
+import re as re
 import subprocess as subprocess
 
 def prompt_for_confirm(prompt=None, resp=False):
@@ -41,6 +42,26 @@ def prompt_for_confirm(prompt=None, resp=False):
       return True
     if ans == 'n' or ans == 'N':
       return False
+
+
+
+def extract_value_from_file_string(regex_match_string, file_as_string, file_path='file', name='Property'):
+  #### Check that regex_match_string matches once and once only
+  if len(re.findall(regex_match_string, file_as_string)) > 1:
+    raise Exception(
+      'Error:\n' +
+      name + ' could not be extracted because there are multiple matches for the pattern ' +
+      '"' + regex_match_string + '" in ' + file_path
+    )
+  elif len(re.findall(regex_match_string, file_as_string)) == 0:
+    raise Exception(
+      'Error:\n' +
+      name + ' could not be extracted because there are no matches for the pattern ' +
+      '"' + regex_match_string + '" in ' + file_path
+    )
+  else:
+    #### Extract current value
+    return re.match('.*' + regex_match_string + '.*', file_as_string, re.DOTALL).group(1)
 
 
 
