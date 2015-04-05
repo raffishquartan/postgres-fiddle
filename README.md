@@ -19,19 +19,28 @@ grunt build                 | Cleans, tests and builds application ready for dep
 
 ## Deploying postgres-fiddle
 
-SES requires Node >= 0.10, pm2 >= 0.12 and postgres >= 9.1.
+postgres-fiddle requires Node = 0.11.x, pm2 >= 0.12 and postgres >= 9.1.
 
 ### Installation
 
-**INSTRUCTIONS TO BE UPDATED TO USE INSTALLATION INSTRUCTIONS**
+1. Copy the distribution archive to the location of choice and extract it.
+2. Run `./scripts/install.py` and follow the instructions
+3. Follow the instructions
+  - for easy upgrades the install script creates a symlink that should be use to refer to the current install
 
-### 0) Install to the desired location
+NB: These installation steps assume that Postgres is running at the time of installation.
 
-Uncompress `build/dist/postgres-fiddle-*.tar.gz` to the desired location
+### Updating the configuration
 
-### 1) Edit postgres-fiddle configuration files
+Run `./scripts/configure.py` and follow the instructions
 
-postgres-fiddle configuration is simple and manual. Edit the following files to adjust its configuration:
+### Upgrading to a later version
+
+Run `./scripts/upgrade.py` and follow the instructions
+
+### Manual configuration
+
+If preferred, postgres-fiddle can also be configured by manually editing various files. They are as follows:
 
 - server/app/util/logger/logger_config.json
   - Server logger configuration (appenders, dest groups and log levels by logger)
@@ -40,25 +49,12 @@ postgres-fiddle configuration is simple and manual. Edit the following files to 
   - Server http_port, q_longStackSupport status (true/false) and the length of time to cache static assets
 - server/app/config/database.js
   - Database connection information and schema name
+- server/app/config/logger.js
+  - The log4js Express logger log string format and definitions of any custom tokens in that string
 - client/js/app/config.js
   - Client logger configuration (and theoretically other things, but there aren't any)
   - All logs sit under `logger:root`, most logging is in `logger:root:js` but all events are info-logged to `
     logger:root:events_logger`
-
-### 2) Set up the postgres-fiddle database
-
-Edit commands in `2-db-setup.sh` to match the configuration specified in (1) and execute this bash script
-
-If the user postgres does not have rights to be in the install directory (they probably won't) then there may be error output 'could not change directory to "/path/to/install/directory"' - this can be ignored.
-
-### 3) Initialise the physical representation
-
-Run `node scripts/3_initialise-pr.js` to create the DB schema and all associated tables.
-
-### 4) Create DB indexes (optional)
-
-`scripts/create-db-indexes.sql` can also be optionally executed to create additional DB indexes for
-better performance
 
 ## Running postgres-fiddle
 
@@ -81,6 +77,8 @@ little and has some nice features I intend to use in other apps as well
 
 ## Issues
 
+- Upgrading does not shut down or restart the web app if running, users must do this via pm2
+  - Arguably this separation of concerns isn't an "issue", the scripts should just be more explicit they don't do it
 - There is no client testing implemented
 
 ## Changelog
