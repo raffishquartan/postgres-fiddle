@@ -84,6 +84,7 @@ little and has some nice features I intend to use in other apps as well
 ## Changelog
 
 v0.0.0 - initial stub, no functionality
+v0.1.0 - initial functionality, architecture - client testing to do
 
 ## License
 
