@@ -69,37 +69,6 @@ module.exports = function(grunt) {
       }
     },
 
-    // POTENTIAL ISSUE: Does grunt-contrib-copy/tasks/copy.js use mode or just default it to false?
-    copy: {
-      build: {
-        cwd: 'src',
-        src: ['**'],
-        dest: 'build/out',
-        expand: true,
-        mode: true
-      },
-      test: {
-        cwd: 'src',
-        src: ['**'],
-        dest: 'test/out',
-        expand: true,
-        mode: true
-      }
-    },
-
-    mkdir: {
-      build: {
-        options: {
-          create: ['build/out/server/logs']
-        }
-      },
-      test: {
-        options: {
-          create: ['test/out/server/logs']
-        }
-      }
-    },
-
     usebanner: {
       js: {
         options: {
