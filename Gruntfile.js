@@ -57,14 +57,14 @@ module.exports = function(grunt) {
 
     jasmine: {
       client: {
-        src: './src/client/js/**/*.js',
+        src: [], // empty because files are sourced via requires
         options: {
           specs: './src/client/js/**/*_jtest.js',
-          outfile: './test/client-jasmine.html',
-          template: require('grunt-template-jasmine-requirejs'),
-          templateOptions: {
-            requireConfigFile: './src/client/js/main.js'
-          }
+          outfile: './src/client/test/jasmine_output.html',
+          //keepRunner: true, // retains generated files in .grunt/grunt-contrib-jasmine, output in outfile location
+          display: 'full', // default is 'full' but being explicit
+          summary: true,
+          template: require('grunt-template-jasmine-requirejs')
         }
       }
     },
