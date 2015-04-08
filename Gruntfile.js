@@ -64,7 +64,33 @@ module.exports = function(grunt) {
           //keepRunner: true, // retains generated files in .grunt/grunt-contrib-jasmine, output in outfile location
           display: 'full', // default is 'full' but being explicit
           summary: true,
-          template: require('grunt-template-jasmine-requirejs')
+          template: require('grunt-template-jasmine-requirejs'),
+          templateOptions: {
+            requireConfig: {
+              baseUrl: './',
+              shim: {
+                backbone: {
+                  deps: ['underscore', 'jquery'],
+                  exports: 'Backbone'
+                },
+                marionette: {
+                  deps: ['jquery', 'underscore', 'backbone'],
+                  exports: 'Marionette'
+                },
+                underscore: {
+                  exports: '_'
+                }
+              },
+              paths: {
+                backbone: 'bower_components/backbone/backbone',
+                jquery: 'bower_components/jquery/dist/jquery',
+                marionette: 'bower_components/marionette/lib/backbone.marionette',
+                moment: 'bower_components/moment/min/moment-with-locales.min',
+                underscore: 'bower_components/underscore/underscore'
+              },
+              urlArgs: 'bust=' + (new Date()).getTime() // no cache for testing / development only
+            }
+          }
         }
       }
     },
