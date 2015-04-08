@@ -60,7 +60,7 @@ module.exports = function(grunt) {
         src: [], // empty because files are sourced via requires
         options: {
           specs: './src/client/js/**/*_jtest.js',
-          outfile: './src/client/test/jasmine_output.html',
+          outfile: './src/client/jasmine_output.html',
           //keepRunner: true, // retains generated files in .grunt/grunt-contrib-jasmine, output in outfile location
           display: 'full', // default is 'full' but being explicit
           summary: true,
