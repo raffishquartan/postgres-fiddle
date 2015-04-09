@@ -7,11 +7,11 @@ module.exports = function(grunt) {
 
   grunt.initConfig({
     // Configuration files and variables
+    build_name: '<%= pkg.name %>-<%= pkg.version %>-<%= time %>',
     pkg: grunt.file.readJSON('package.json'),
     time: grunt.template.today("yyyymmdd-HHMM"),
     today: grunt.template.today('yyyy-mm-dd'),
     year: grunt.template.today('yyyy'),
-    build_name: '<%= pkg.name %>-<%= pkg.version %>-<%= time %>',
 
     // Plugin tasks
     clean: {
@@ -20,7 +20,6 @@ module.exports = function(grunt) {
       }
     },
 
-    // TODO Update jshint options to match code directory structure
     jshint: {
       all: [
         'src/**/*.js',
@@ -35,8 +34,8 @@ module.exports = function(grunt) {
     mochaTest: {
       unit: {
         options: {
-          reporter: 'spec',
-          clearRequireCache: true
+          clearRequireCache: true,
+          reporter: 'spec'
         },
         src: [
           './**/*_utest.js',
@@ -45,13 +44,53 @@ module.exports = function(grunt) {
       },
       integration: {
         options: {
-          reporter: 'spec',
-          clearRequireCache: true
+          clearRequireCache: true,
+          reporter: 'spec'
         },
         src: [
           './**/*_itest.js',
           '!./build/**/*.js'
         ]
+      }
+    },
+
+    jasmine: {
+      client: {
+        src: [], // empty because files are sourced via requires
+        options: {
+          display: 'full', // default is 'full' but being explicit
+          //keepRunner: true, // retains generated files in .grunt/grunt-contrib-jasmine, output in outfile location
+          outfile: './src/client/jasmine_output.html',
+          specs: './src/client/js/**/*_jtest.js',
+          summary: true,
+          template: require('grunt-template-jasmine-requirejs'),
+          templateOptions: {
+            requireConfig: {
+              baseUrl: './',
+              shim: {
+                backbone: {
+                  deps: ['underscore', 'jquery'],
+                  exports: 'Backbone'
+                },
+                marionette: {
+                  deps: ['jquery', 'underscore', 'backbone'],
+                  exports: 'Marionette'
+                },
+                underscore: {
+                  exports: '_'
+                }
+              },
+              paths: {
+                backbone: 'bower_components/backbone/backbone',
+                jquery: 'bower_components/jquery/dist/jquery',
+                marionette: 'bower_components/marionette/lib/backbone.marionette',
+                moment: 'bower_components/moment/min/moment-with-locales.min',
+                underscore: 'bower_components/underscore/underscore'
+              },
+              urlArgs: 'bust=' + (new Date()).getTime() // no cache for testing / development only
+            }
+          }
+        }
       }
     },
 
@@ -127,23 +166,23 @@ module.exports = function(grunt) {
     },
 
     exec: {
-      mkdir: {
-        command: 'mkdir -p build/out/<%= build_name %>/logs build/dist'
+      compress: {
+        cwd: 'build/out',
+        command: 'tar czf ../dist/<%= build_name %>.tar.gz <%= build_name %>'
       },
       copy: {
         command: 'cp -r src/* build/out/<%= build_name %>'
       },
-      compress: {
-        cwd: 'build/out',
-        command: 'tar czf ../dist/<%= build_name %>.tar.gz <%= build_name %>'
-      }
+      mkdir: {
+        command: 'mkdir -p build/out/<%= build_name %>/logs build/dist'
+      },
     }
   });
 
   grunt.registerTask('assemble', ['exec:mkdir', 'exec:copy']);
   grunt.registerTask('metadata', ['usebanner', 'version_file']);
-  grunt.registerTask('test', ['jshint', 'mochaTest', 'git-is-clean']);
-  grunt.registerTask('dirty_test', ['jshint', 'mochaTest']);
+  grunt.registerTask('test', ['jshint', 'mochaTest', 'jasmine', 'git-is-clean']);
+  grunt.registerTask('dirty_test', ['jshint', 'mochaTest', 'jasmine']);
 
   grunt.registerTask('build', ['test', 'clean', 'assemble', 'metadata', 'exec:compress']);
   grunt.registerTask('dirty_build', ['dirty_test', 'clean', 'assemble', 'metadata', 'exec:compress']);

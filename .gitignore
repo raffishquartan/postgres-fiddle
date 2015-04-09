@@ -8,4 +8,4 @@ test/out
 logs
 .grunt
 *.pyc
-
+jasmine_output.html
