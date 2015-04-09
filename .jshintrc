@@ -27,6 +27,9 @@
     "beforeEach" : false,
     "after"      : false,
     "afterEach"  : false,
+    /* Jasmine */
+    "expect"     : false,
+    "jasmine"    : false,
     /* RequireJS */
     "define"     : false,
     /* Other */

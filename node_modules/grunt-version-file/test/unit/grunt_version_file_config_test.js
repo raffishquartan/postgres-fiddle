@@ -17,7 +17,7 @@ describe("GruntVersionFileConfig", function() {
 
   var OUT_FILEPATH_VALID = "build/out/version.json";
   var GENERATOR_DIR_VALID = "generators";
-  var GENERATOR_LIST_VALID = ["datestring", "npm_version"];
+  var GENERATOR_LIST_VALID = ["datestring", "npm_version", "git_describe"];
 
   var CONFIG_VALID = {
     out: OUT_FILEPATH_VALID,
@@ -124,7 +124,7 @@ describe("GruntVersionFileConfig", function() {
   it("stores the correct generator list for the valid test config", function() {
     var gvfc = new GruntVersionFileConfig(CONFIG_VALID);
     var list = gvfc.generator_list();
-    list.length.should.equal(2);
+    list.length.should.equal(GENERATOR_LIST_VALID.length);
     var not_found_index_value = -1;
     for(var i in GENERATOR_LIST_VALID) {
       var gen_string = GENERATOR_LIST_VALID[i];
