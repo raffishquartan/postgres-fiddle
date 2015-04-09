@@ -7,11 +7,11 @@ module.exports = function(grunt) {
 
   grunt.initConfig({
     // Configuration files and variables
+    build_name: '<%= pkg.name %>-<%= pkg.version %>-<%= time %>',
     pkg: grunt.file.readJSON('package.json'),
     time: grunt.template.today("yyyymmdd-HHMM"),
     today: grunt.template.today('yyyy-mm-dd'),
     year: grunt.template.today('yyyy'),
-    build_name: '<%= pkg.name %>-<%= pkg.version %>-<%= time %>',
 
     // Plugin tasks
     clean: {
@@ -20,7 +20,6 @@ module.exports = function(grunt) {
       }
     },
 
-    // TODO Update jshint options to match code directory structure
     jshint: {
       all: [
         'src/**/*.js',
@@ -35,8 +34,8 @@ module.exports = function(grunt) {
     mochaTest: {
       unit: {
         options: {
-          reporter: 'spec',
-          clearRequireCache: true
+          clearRequireCache: true,
+          reporter: 'spec'
         },
         src: [
           './**/*_utest.js',
@@ -45,8 +44,8 @@ module.exports = function(grunt) {
       },
       integration: {
         options: {
-          reporter: 'spec',
-          clearRequireCache: true
+          clearRequireCache: true,
+          reporter: 'spec'
         },
         src: [
           './**/*_itest.js',
@@ -59,10 +58,10 @@ module.exports = function(grunt) {
       client: {
         src: [], // empty because files are sourced via requires
         options: {
-          specs: './src/client/js/**/*_jtest.js',
-          outfile: './src/client/jasmine_output.html',
-          //keepRunner: true, // retains generated files in .grunt/grunt-contrib-jasmine, output in outfile location
           display: 'full', // default is 'full' but being explicit
+          //keepRunner: true, // retains generated files in .grunt/grunt-contrib-jasmine, output in outfile location
+          outfile: './src/client/jasmine_output.html',
+          specs: './src/client/js/**/*_jtest.js',
           summary: true,
           template: require('grunt-template-jasmine-requirejs'),
           templateOptions: {
@@ -167,16 +166,16 @@ module.exports = function(grunt) {
     },
 
     exec: {
-      mkdir: {
-        command: 'mkdir -p build/out/<%= build_name %>/logs build/dist'
+      compress: {
+        cwd: 'build/out',
+        command: 'tar czf ../dist/<%= build_name %>.tar.gz <%= build_name %>'
       },
       copy: {
         command: 'cp -r src/* build/out/<%= build_name %>'
       },
-      compress: {
-        cwd: 'build/out',
-        command: 'tar czf ../dist/<%= build_name %>.tar.gz <%= build_name %>'
-      }
+      mkdir: {
+        command: 'mkdir -p build/out/<%= build_name %>/logs build/dist'
+      },
     }
   });
 
