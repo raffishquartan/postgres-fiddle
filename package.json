@@ -5,7 +5,7 @@
     "email": "cfogelberg@gmail.com",
     "url": "http://qualocustech.wordpress.com"
   },
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "An impl fiddle that demos postgres in a Node.JS single page webapp",
   "private": true,
   "repository": {

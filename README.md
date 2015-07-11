@@ -83,10 +83,11 @@ little and has some nice features I intend to use in other apps as well
 
 ## Changelog
 
-v0.0.0 - initial stub, no functionality
-v0.1.0 - initial functionality, architecture - client testing to do
-v0.1.1 - client testing with Jasmine / Grunt / RequireJS
+- v0.0.0 - initial stub, no functionality
+- v0.1.0 - initial functionality, architecture - client testing to do
+- v0.1.1 - client testing with Jasmine / Grunt / RequireJS
+- v0.1.2 - released under the MIT license
 
 ## License
 
-Copyright (C) 2015 Christo Fogelberg, all rights reserved
+Copyright (C) 2015 Christo Fogelberg, see the `LICENSE` file for details
